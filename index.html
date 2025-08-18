@@ -1,61 +1,99 @@
-<html land="en">
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/p5.js"></script>
-    <style>
-        img {
-            width: 100%
-        }
-
-        video {
-            width: 100%
-        }
-
-        audio {
-            width: 100%
-        }
-
-        h1 {
-            padding: 10px;
-            border-radius: 10px;
-            border: 2px solid black;
-            font-style: italic;
-        }
-
-        @font-face {
-            font-family: Futura;
-            src: url('futura.ttf');
-        }
-
-        * {
-            font-family: "Futura"
-        }
-    </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Name</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #222;
+      line-height: 1.6;
+    }
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      background: rgba(255,255,255,0.9);
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      z-index: 1000;
+    }
+    header a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    main {
+      padding: 6rem 2rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    section.project {
+      margin-bottom: 4rem;
+    }
+    section.project h2 {
+      margin-bottom: .5rem;
+      font-size: 2rem;
+      font-weight: normal;
+    }
+    section.project p {
+      margin-bottom: 1rem;
+      color: #555;
+    }
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-gap: 1rem;
+    }
+    .images img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    section#about {
+      margin-top: 6rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-    <main>
-        <img src="saltsilk.jpeg">
-        <h1>Salt & Silk</h1>
-        <p>
-            Recycled glass beads bound together with knotted silk ribbon engolfing the beads. Inspired by the repition of the waves rolling over the sandy beaches of Southern California. 
-        </p>
 
-        <hr>
+  <header>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+  </header>
 
-        <img src="petal.jpeg">
-        <h1>Petal</h1>
-        <p>
-            Sturdy, heavy, silver. 
-        </p>
+  <main id="work">
+    <!-- Example Project Section -->
+    <section class="project">
+      <h2>Project Title (Year)</h2>
+      <p>Short description: tools used, context, collaborators.</p>
+      <div class="images">
+        <img src="image1.jpg" alt="Project — scene 1">
+        <img src="image2.jpg" alt="Project — scene 2">
+      </div>
+    </section>
 
-        <hr>
+    <!-- Repeat sections for other projects -->
+  </main>
 
-    </main>
-    <script src="sketch.js"></script>
-    <footer>
-      <a href="https://www.instagram.com/laurenmargauxx/">Business Instagram</a>
-    <footer>
-        <p>©2025 Lauren Stammnitz </p>
-    </footer>
+  <section id="about">
+    <h2>About</h2>
+    <p>A brief introduction about who you are, what you do, your background, and what drives your creative work.</p>
+  </section>
 
+  <footer>
+    © <!-- insert year or your name -->
+  </footer>
 
 </body>
+</html>
