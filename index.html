@@ -25,10 +25,13 @@
       --heading-font: 'Poppins', sans-serif;
       --body-font: 'Quicksand', sans-serif;
       --menu-font: 'Poppins', sans-serif;
+      --initials-color: #888; /* grey for initials */
+      --progress-color: #888; /* grey for progress bar */
     }
     @media (prefers-color-scheme: light){
       :root{
         --bg:#f8f9fe; --surface:#ffffffcc; --text:#161821; --muted:#4a4f62; --accent:#3b5bff; --ring:#3aa3ff; --card:#ffffff;
+        --initials-color:#666; --progress-color:#666;
       }
     }
     *{box-sizing:border-box}
@@ -47,7 +50,7 @@
     header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:var(--surface); border-bottom:1px solid #ffffff20}
     .nav{display:flex; align-items:center; justify-content:space-between; height:var(--nav-h)}
     .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px; font-family:var(--heading-font)}
-    .brand .dot{display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--accent)}
+    .brand .initials{display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--initials-color); color:#fff; font-size:.8rem; font-weight:600}
 
     .nav ul{list-style:none; display:flex; gap:.75rem; margin:0; padding:0}
     .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px; font-family:var(--menu-font)}
@@ -63,7 +66,7 @@
     }
 
     .progress{height:3px; background:#ffffff1a; position:relative}
-    .progress > i{position:absolute; inset:0; width:0; background:linear-gradient(90deg, var(--accent), #66e1ff); transform-origin:left;}
+    .progress > i{position:absolute; inset:0; width:0; background:var(--progress-color); transform-origin:left;}
 
     main{padding:48px 0 80px}
     section{scroll-margin-top: calc(var(--nav-h) + 16px);}
@@ -90,7 +93,7 @@
 
   <header>
     <div class="wrap nav" role="navigation" aria-label="Primary">
-      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>Ava Tartakovsky</span></div>
+      <div class="brand"><span class="initials">AT</span> <span>Ava Tartakovsky</span></div>
       <button class="nav-toggle" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">☰</button>
       <ul id="menu" role="menubar" aria-expanded="false">
         <li role="none"><a role="menuitem" href="#about" data-spy>About</a></li>
