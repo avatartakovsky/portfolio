@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ava Tartakovsky — Portfolio</title>
-  <meta name="description" content="Portfolio website for Ava Tartakovsky with art showcase and interactive design."/>
+  <meta name="description" content="A minimal portfolio with a sticky navigation bar, scroll-spy highlighting, and progress indicator. Single-file and GitHub Pages ready."/>
 
-  <!-- Fonts -->
+  <!-- ====== Custom Fonts (Google Fonts) ====== -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ====== Theme ====== */
     :root{
       --bg: #0b0c10;
       --surface: #111218cc;
@@ -24,186 +25,207 @@
       --heading-font: 'Poppins', sans-serif;
       --body-font: 'Quicksand', sans-serif;
       --menu-font: 'Poppins', sans-serif;
-      --progress-color: #9e9e9e;
+      --progress-color: #9e9e9e; /* grey for progress bar */
     }
-    body{margin:0;font:400 16px/1.65 var(--body-font);color:var(--text);background:var(--bg);} 
-    h1,h2,h3{font-family:var(--heading-font)}
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-    header{position:sticky;top:0;z-index:50;background:var(--surface);}
-    .nav{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
-    .brand{display:flex;align-items:center;gap:.75rem;font-weight:800;font-family:var(--heading-font)}
-    .nav ul{list-style:none;display:flex;gap:.75rem;margin:0;padding:0}
-    .nav a{font-family:var(--menu-font);color:var(--muted);text-decoration:none;padding:.55rem .8rem;border-radius:999px}
-    .progress{height:3px;background:#ffffff1a;position:relative}
-    .progress>i{position:absolute;inset:0;width:0;background:var(--progress-color);}
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f8f9fe; --surface:#ffffffcc; --text:#161821; --muted:#4a4f62; --accent:#3b5bff; --ring:#3aa3ff; --card:#ffffff; --progress-color:#7d7d7d;
+      }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+    body{
+      margin:0; font: 400 16px/1.65 var(--body-font);
+      color:var(--text);
+      background:radial-gradient(80rem 60rem at 10% -20%, #233 0%, transparent 60%), radial-gradient(50rem 40rem at 110% 0%, #223 0%, transparent 55%), var(--bg);
+    }
+    h1, h2, h3{font-family:var(--heading-font)}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 
+    /* ===== Accessibility ===== */
+    .skip-link{position:absolute; left:-9999px; top:0; background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px #0003}
+    .skip-link:focus{left:12px; top:12px; outline:3px solid var(--ring)}
+
+    /* ===== Header / Sticky Nav ===== */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:var(--surface); border-bottom:1px solid #ffffff20}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:var(--nav-h)}
+    .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px; font-family:var(--heading-font)}
+    .brand .blob{display:inline-block}
+
+    .nav ul{list-style:none; display:flex; gap:.75rem; margin:0; padding:0}
+    .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px; font-family:var(--menu-font)}
+    .nav a:hover{color:var(--text); background:#ffffff10}
+    .nav a[aria-current="true"], .nav a.is-active{color:var(--text); background:#ffffff1a; box-shadow: inset 0 0 0 1px #ffffff20}
+
+    /* Mobile menu */
+    .nav-toggle{display:none; background:transparent; border:1px solid #ffffff30; color:var(--text); padding:.5rem .7rem; border-radius:10px}
+    .nav-toggle:focus-visible{outline:3px solid var(--ring)}
+    @media (max-width: 900px){
+      .nav ul{position:fixed; inset:calc(var(--nav-h) + 8px) 12px auto 12px; background:var(--card); border:1px solid #ffffff20; border-radius:14px; box-shadow:0 16px 60px #0005; padding:10px; flex-direction:column; gap:4px; display:none}
+      .nav ul[aria-expanded="true"]{display:flex}
+      .nav-toggle{display:inline-flex}
+    }
+
+    /* ===== Progress bar (under header) ===== */
+    .progress{height:3px; background:#ffffff1a; position:relative}
+    .progress > i{position:absolute; inset:0; width:0; background:var(--progress-color); transform-origin:left;}
+
+    /* ===== Main content ===== */
     main{padding:48px 0 80px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:12px}
+    section{scroll-margin-top: calc(var(--nav-h) + 16px);}
+    .hero{display:grid; grid-template-columns: 1.1fr .9fr; gap:2rem; align-items:center; padding:48px 0}
+    .hero .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:28px; box-shadow:0 16px 60px #0005; font-family:var(--body-font)}
+    .hero h1{font-size: clamp(28px, 2.8vw + 12px, 64px); line-height:1.06; margin:0 0 8px; font-weight:800}
+    .hero p{color:var(--muted); margin:0; font-family:var(--body-font)}
 
-    .art-card{position:relative;overflow:hidden;border-radius:var(--radius);}
-    .art-card img{display:block;width:100%;height:auto;border-radius:var(--radius);transition:transform .5s ease;}
-    .art-card:hover img{transform:scale(1.05);}
-    .art-card h3{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--heading-font);font-size:1.4rem;background:rgba(0,0,0,0.55);color:#fff;margin:0;opacity:1;transition:opacity .5s ease;}
-    .art-card:hover h3{opacity:0;}
+    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:20px; font-family:var(--body-font)}
+    .card h3{margin:.2rem 0 .3rem; font-family:var(--heading-font)}
+    .muted{color:var(--muted)}
+    .kicker{font-size:.9rem; text-transform:uppercase; letter-spacing:.18em; color:var(--muted); font-family:var(--heading-font)}
 
-    footer{padding:56px 0 80px;color:var(--muted);font-family:var(--body-font)}
+    @media (max-width:1000px){ .hero{grid-template-columns:1fr} .grid{grid-template-columns:1fr 1fr} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} }
+
+    footer{padding:56px 0 80px; color:var(--muted); font-family:var(--body-font)}
     footer a{color:inherit}
-    header,main,footer{position:relative;z-index:1}
-    #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.6;}
+
+    /* Keep content above the canvas */
+    header, main, footer { position: relative; z-index: 1; }
+
+    /* ===== Animated p5.js background canvas ===== */
+    #bg-canvas{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.6;}
+
+    /* ===== Animated p5.js background canvas ===== */
+    #bg-canvas{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.6;}
   </style>
 </head>
 <body>
-  <!-- Animated background mounts here -->
+  <!-- p5.js background will mount here -->
   <div id="bg"></div>
-  <div id="bg"></div>
+
   <a class="skip-link" href="#content">Skip to content</a>
+
   <header>
-    <div class="wrap nav">
+    <div class="wrap nav" role="navigation" aria-label="Primary">
       <div class="brand">
-        <svg class="blob" width="32" height="32" viewBox="0 0 100 100"><path fill="#bdbdbd" d="M79.6,59.2c-6.7,16-24.7,23.1-39,17.2c-11.5-4.7-20-16.2-19.1-28.5c1-13.5,11.4-25.8,25.2-28.2c14.5-2.6,30.1,6.2,34.1,20.2C82,46.2,82.1,53,79.6,59.2z"/><text x="50" y="58" text-anchor="middle" font-size="38" font-family="Poppins, sans-serif" fill="#fff" font-weight="700">AT</text></svg>
+        <!-- Abstract light-grey blob with initials -->
+        <svg class="blob" width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
+          <path fill="#bdbdbd" d="M79.6,59.2c-6.7,16-24.7,23.1-39,17.2c-11.5-4.7-20-16.2-19.1-28.5c1-13.5,11.4-25.8,25.2-28.2 c14.5-2.6,30.1,6.2,34.1,20.2C82,46.2,82.1,53,79.6,59.2z"/>
+          <text x="50" y="58" text-anchor="middle" font-size="30" font-family="Poppins, sans-serif" fill="#ffffff" font-weight="700">AT</text>
+        </svg>
         <span>Ava Tartakovsky</span>
       </div>
-      <ul id="menu">
-        <li><a href="#about">About</a></li>
-        <li><a href="#work">Art</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#contact">Contact</a></li>
+      <button class="nav-toggle" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">☰</button>
+      <ul id="menu" role="menubar" aria-expanded="false">
+        <li role="none"><a role="menuitem" href="#about" data-spy>About</a></li>
+        <li role="none"><a role="menuitem" href="#work" data-spy>Work</a></li>
+        <li role="none"><a role="menuitem" href="#research" data-spy>Research</a></li>
+        <li role="none"><a role="menuitem" href="#contact" data-spy>Contact</a></li>
       </ul>
     </div>
-    <div class="progress"><i id="bar"></i></div>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
   </header>
 
   <main id="content" class="wrap">
-    <section id="about">
+    <!-- HERO / INTRO -->
+    <section id="about" aria-labelledby="about-h">
       <div class="hero">
         <div>
-          <p class="kicker">Hello</p>
-          <h1>Designer & Developer</h1>
-          <p class="muted">I create interactive visuals, digital art, and design experiences. This site is where I share my projects, experiments, and artwork.</p>
+          <p class="kicker">HOME</p>
+          <h1 id="about-h">Ava Tartakovsky</h1>
+          <p class="muted">I am a senior at UCSB studying to major in Sociology, minor in Media, Arts, and Technology, and a certificate in Technology Management. I specialize in photography and design and am looking to experiment with new concepts and methods.</p>
+        </div>
+        <div class="card">
+          <h2>Quick facts</h2>
+          <ul>
+            <li>Location: Los Angeles and Santa Barbara</li>
+            <li>Focus: Graphic Desgin, Photography, Interior Design, and Calligraphy</li>
+            <li>Open to: Collabs and internships </li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="work" style="padding:28px 0 8px">
-      <h2>My Art</h2>
-      <p class="muted">Hover over the titles to reveal my photos.</p>
-      <div class="grid">
-        <div class="art-card"><img src="photo1.jpg" alt="Artwork 1"><h3>Artwork Title 1</h3></div>
-        <div class="art-card"><img src="photo2.jpg" alt="Artwork 2"><h3>Artwork Title 2</h3></div>
-        <div class="art-card"><img src="photo3.jpg" alt="Artwork 3"><h3>Artwork Title 3</h3></div>
-        <div class="art-card"><img src="photo4.jpg" alt="Artwork 4"><h3>Artwork Title 4</h3></div>
-        <div class="art-card"><img src="photo5.jpg" alt="Artwork 5"><h3>Artwork Title 5</h3></div>
-        <div class="art-card"><img src="photo6.jpg" alt="Artwork 6"><h3>Artwork Title 6</h3></div>
+    <!-- WORK -->
+    <section id="work" aria-labelledby="work-h" style="padding:28px 0 8px">
+      <h2 id="work-h">Selected Work</h2>
+      <p class="muted">Swap these cards with your real projects. Keep titles short; add a one‑liner under each.</p>
+      <div class="grid" style="margin-top:12px">
+        <article class="card"><h3>Project Alpha</h3><p class="muted">Interactive installation exploring data visualization</p></article>
+        <article class="card"><h3>Project Beta</h3><p class="muted">Web app for collaborative music creation</p></article>
+        <article class="card"><h3>Project Gamma</h3><p class="muted">HCI research in creative contexts</p></article>
       </div>
     </section>
 
-    <section id="research" style="padding:28px 0 8px">
-      <h2>Research</h2>
-      <p class="muted">Section for research content here.</p>
+    <!-- RESEARCH -->
+    <section id="research" aria-labelledby="research-h" style="padding:28px 0 8px">
+      <h2 id="research-h">Research</h2>
+      <div class="grid" style="margin-top:12px">
+        <article class="card"><h3>Paper One</h3><p class="muted">A short abstract or takeaway lives here.</p></article>
+        <article class="card"><h3>Paper Two</h3><p class="muted">Add a DOI or link to the PDF.</p></article>
+        <article class="card"><h3>Talk</h3><p class="muted">Conference talk with slides and recording.</p></article>
+      </div>
     </section>
 
-    <section id="contact" style="padding:28px 0 8px">
-      <h2>Contact</h2>
-      <div class="card"><p class="muted">Email <a href="mailto:you@example.com">you@example.com</a></p></div>
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-h" style="padding:28px 0 8px">
+      <h2 id="contact-h">Contact</h2>
+      <div class="card">
+        <p class="muted">Email <a href="mailto:you@example.com">you@example.com</a> • Based in San Francisco, CA</p>
+      </div>
     </section>
   </main>
 
   <footer class="wrap">
-    <small>© <span id="year"></span> Ava Tartakovsky. Built with HTML/CSS/JS. Hosted on GitHub Pages.</small>
+    <small>© <span id="year"></span> Ava Tartakovsky. Built with vanilla HTML/CSS/JS. Hosted on GitHub Pages.</small>
   </footer>
 
-  <!-- Background animation and scripts stay here -->
-  
-  <!-- p5.js for animated abstract blob background -->
+  <!-- p5.js for animated background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    // ===== Abstract, smoother, less circular blobs with soft burgundy pops =====
-    // Instance mode so all p5 calls are scoped to `p`
-    const sketch = (p) => {
-      const BLOBS = 8;           // number of blobs
-      const STEPS = 80;          // points per blob (higher = smoother)
-      const SPEED = 0.0018;      // global time speed
-      const GREYS = [
-        p => p.color(180, 182, 190, 60),  // light grey
-        p => p.color(150, 152, 162, 65),  // mid grey (a bit darker)
-        p => p.color(120, 122, 132, 70)   // darker accent grey
-      ];
-      const BURGUNDY = p => p.color(140, 60, 80, 60); // soft burgundy pop
-
-      let t = 0;
+    // ===== p5.js light grey "lava lamp" background (more motion) =====
+    let s = (p) => {
       let blobs = [];
+      const NUM = 8; // number of blobs (more = fuller motion)
+      let t = 0;     // global time for noise field
 
       class Blob {
-        constructor(isAccent = false) {
-          this.isAccent = isAccent;               // burgundy if true
-          this.baseR = p.random(120, 220);        // base radius
-          this.noiseScale = p.random(0.6, 1.1);   // how wavy the outline is
-          this.noiseAmp = p.random(18, 34);       // amplitude of waviness
+        constructor() {
+          this.r0 = p.random(90, 150); // base radius
+          this.r = this.r0;
           this.pos = p.createVector(p.random(p.width), p.random(p.height));
-          this.dirSeed = p.createVector(p.random(1000), p.random(1000));
-          this.speed = p.random(0.4, 1.0);        // motion multiplier
-          this.rot = p.random(p.TWO_PI);
+          this.xOff = p.random(1000);
+          this.yOff = p.random(2000);
+          this.speed = p.random(0.006, 0.012); // faster than before for constant motion
         }
         update() {
-          // Velocity field from noise for organic drift
-          const ang = p.noise(this.dirSeed.x + t * this.speed, this.dirSeed.y - t * this.speed) * p.TWO_PI * 2.0;
-          const v = p5.Vector.fromAngle(ang).mult(0.9);
-          this.pos.add(v);
+          // Direction from a 2D noise field
+          const angle = p.noise(this.xOff + t, this.yOff - t) * p.TWO_PI * 2.0;
+          const vel = p5.Vector.fromAngle(angle).mult(0.8); // velocity magnitude
+          this.pos.add(vel);
 
-          // Wrap around edges with padding so motion is continuous
-          const pad = 250;
-          if (this.pos.x < -pad) this.pos.x = p.width + pad;
-          if (this.pos.x > p.width + pad) this.pos.x = -pad;
-          if (this.pos.y < -pad) this.pos.y = p.height + pad;
-          if (this.pos.y > p.height + pad) this.pos.y = -pad;
+          // Animate size a bit
+          this.r = this.r0 * (0.9 + 0.15 * p.sin(t * 1.8 + this.xOff));
 
-          // Slow rotation to evolve the outline
-          this.rot += 0.0015 * this.speed;
+          // Wrap around edges for seamless motion
+          if (this.pos.x < -200) this.pos.x = p.width + 200;
+          if (this.pos.x > p.width + 200) this.pos.x = -200;
+          if (this.pos.y < -200) this.pos.y = p.height + 200;
+          if (this.pos.y > p.height + 200) this.pos.y = -200;
+
+          // advance noise offsets for variety
+          this.xOff += this.speed;
+          this.yOff += this.speed * 1.1;
         }
         draw() {
           p.noStroke();
-          const c = this.isAccent ? BURGUNDY(p) : GREYS[Math.floor(p.random(GREYS.length))](p);
-          p.fill(c);
-
-          // Build a smooth blobby outline using noise‑modulated superellipse radius
-          p.beginShape();
-          for (let i = 0; i <= STEPS; i++) {
-            const a = (i / STEPS) * p.TWO_PI;
-            const a2 = a + this.rot;
-            // Superellipse-ish base shape (m between 2..5); lerp makes it less circular
-            const m = p.lerp(2.0, 4.8, (p.noise(i * 0.05 + t * 0.2) + 0.2) * 0.6);
-            const cosA = Math.sign(Math.cos(a2)) * Math.pow(Math.abs(Math.cos(a2)), 2 / m);
-            const sinA = Math.sign(Math.sin(a2)) * Math.pow(Math.abs(Math.sin(a2)), 2 / m);
-            let r = this.baseR;
-            // Radial noise for blobby contour
-            r += (p.noise(Math.cos(a2) * this.noiseScale + t, Math.sin(a2) * this.noiseScale - t) - 0.5) * 2 * this.noiseAmp;
-            const x = this.pos.x + cosA * r;
-            const y = this.pos.y + sinA * r;
-            if (i === 0) p.curveVertex(x, y);
-            p.curveVertex(x, y);
-            if (i === STEPS) p.curveVertex(x, y);
-          }
-          p.endShape(p.CLOSE);
-
-          // Soft inner layer for depth
-          const c2 = this.isAccent ? p.color(140, 60, 80, 38) : p.color(240, 240, 240, 26);
-          p.fill(c2);
-          p.beginShape();
-          for (let i = 0; i <= STEPS; i++) {
-            const a = (i / STEPS) * p.TWO_PI;
-            const a2 = a + this.rot * 1.1;
-            const m = 3.2; // smoother inner shape
-            const cosA = Math.sign(Math.cos(a2)) * Math.pow(Math.abs(Math.cos(a2)), 2 / m);
-            const sinA = Math.sign(Math.sin(a2)) * Math.pow(Math.abs(Math.sin(a2)), 2 / m);
-            let r = this.baseR * 0.82;
-            r += (p.noise(Math.cos(a2) * this.noiseScale * 1.2 + t * 0.6, Math.sin(a2) * this.noiseScale * 1.2 - t * 0.6) - 0.5) * 2 * (this.noiseAmp * 0.6);
-            const x = this.pos.x + cosA * r;
-            const y = this.pos.y + sinA * r;
-            if (i === 0) p.curveVertex(x, y);
-            p.curveVertex(x, y);
-            if (i === STEPS) p.curveVertex(x, y);
-          }
-          p.endShape(p.CLOSE);
+          // two layered fills for subtle depth (white and light grey)
+          p.fill(255, 255, 255, 30);
+          p.ellipse(this.pos.x, this.pos.y, this.r * 1.18, this.r * 1.18);
+          p.fill(210, 210, 210, 42);
+          p.ellipse(this.pos.x + 10, this.pos.y + 8, this.r, this.r);
         }
       }
 
@@ -212,25 +234,68 @@
         c.id('bg-canvas');
         c.parent('bg');
         p.frameRate(60);
-        // 1–2 burgundy accents, rest greys
-        const accentCount = Math.floor(p.random(1, 3));
-        for (let i = 0; i < BLOBS; i++) blobs.push(new Blob(i < accentCount));
+        for (let i = 0; i < NUM; i++) blobs.push(new Blob());
       };
-
       p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
       };
-
       p.draw = () => {
+        // Clear fully each frame so motion is crisp
         p.clear();
         p.blendMode(p.SOFT_LIGHT);
         blobs.forEach(b => { b.update(); b.draw(); });
         p.blendMode(p.BLEND);
-        t += SPEED;
+        t += 0.005; // advance global time
       };
     };
+    new p5(s);
+  </script>
 
-    new p5(sketch);
+  <script>
+    // ===== UI scripts =====
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => {
+      const open = menu.getAttribute('aria-expanded') === 'true';
+      menu.setAttribute('aria-expanded', String(!open));
+      toggle.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Close on link click (mobile)
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      if (getComputedStyle(toggle).display !== 'none') {
+        menu.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    }));
+
+    // Scroll progress
+    const bar = document.getElementById('bar');
+    const setProgress = () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      bar.style.width = (scrolled * 100).toFixed(2) + '%';
+    };
+    setProgress();
+    document.addEventListener('scroll', setProgress, {passive:true});
+
+    // Scroll‑spy
+    const links = Array.from(document.querySelectorAll('[data-spy]'));
+    const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const link = links.find(l => l.getAttribute('href') === '#' + id);
+        if (entry.isIntersecting) {
+          links.forEach(a => { a.removeAttribute('aria-current'); a.classList.remove('is-active'); });
+          if (link) { link.setAttribute('aria-current', 'true'); link.classList.add('is-active'); }
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 });
+    sections.forEach(s => spy.observe(s));
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
