@@ -5,19 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your Name — Portfolio</title>
   <meta name="description" content="A minimal portfolio with a sticky navigation bar, scroll‑spy highlighting, and progress indicator. Single‑file and GitHub Pages ready."/>
+
+  <!-- ====== Custom Fonts (Google Fonts Example) ====== -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     /* ====== Theme ====== */
     :root{
       --bg: #0b0c10;
-      --surface: #111218cc; /* translucent for blur */
+      --surface: #111218cc;
       --text: #f5f7ff;
       --muted: #c9ccda;
       --accent: #8b9dff;
       --ring: #9ad0ff;
       --card: #14161f;
       --maxw: 90rem;
-      --nav-h: 64px; /* header height */
+      --nav-h: 64px;
       --radius: 16px;
+      --heading-font: 'Poppins', sans-serif;
+      --body-font: 'Roboto Mono', monospace;
     }
     @media (prefers-color-scheme: light){
       :root{
@@ -28,30 +34,25 @@
     html{scroll-behavior:smooth}
     @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
     body{
-      margin:0; font: 500 16px/1.65 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      margin:0; font: 400 16px/1.65 var(--body-font);
       color:var(--text); background:radial-gradient(80rem 60rem at 10% -20%, #233 0%, transparent 60%), radial-gradient(50rem 40rem at 110% 0%, #223 0%, transparent 55%), var(--bg);
     }
+    h1, h2, h3{font-family:var(--heading-font)}
     .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 
-    /* ====== Skip link ====== */
     .skip-link{position:absolute; left:-9999px; top:0; background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px #0003}
     .skip-link:focus{left:12px; top:12px; outline:3px solid var(--ring)}
 
-    /* ====== Header / Sticky Nav ====== */
-    header{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px);
-      background:var(--surface); border-bottom:1px solid #ffffff20;
-    }
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:var(--surface); border-bottom:1px solid #ffffff20}
     .nav{display:flex; align-items:center; justify-content:space-between; height:var(--nav-h)}
-    .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px}
+    .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px; font-family:var(--heading-font)}
     .brand .dot{display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--accent)}
 
     .nav ul{list-style:none; display:flex; gap:.75rem; margin:0; padding:0}
-    .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px}
+    .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px; font-family:var(--body-font)}
     .nav a:hover{color:var(--text); background:#ffffff10}
     .nav a[aria-current="true"], .nav a.is-active{color:var(--text); background:#ffffff1a; box-shadow: inset 0 0 0 1px #ffffff20}
 
-    /* Mobile menu */
     .nav-toggle{display:none; background:transparent; border:1px solid #ffffff30; color:var(--text); padding:.5rem .7rem; border-radius:10px}
     .nav-toggle:focus-visible{outline:3px solid var(--ring)}
     @media (max-width: 900px){
@@ -60,28 +61,26 @@
       .nav-toggle{display:inline-flex}
     }
 
-    /* ====== Progress bar (under header) ====== */
     .progress{height:3px; background:#ffffff1a; position:relative}
     .progress > i{position:absolute; inset:0; width:0; background:linear-gradient(90deg, var(--accent), #66e1ff); transform-origin:left;}
 
-    /* ====== Main content ====== */
     main{padding:48px 0 80px}
     section{scroll-margin-top: calc(var(--nav-h) + 16px);}
     .hero{display:grid; grid-template-columns: 1.1fr .9fr; gap:2rem; align-items:center; padding:48px 0}
-    .hero .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:28px; box-shadow:0 16px 60px #0005}
-    .hero h1{font-size: clamp(28px, 2.8vw + 12px, 64px); line-height:1.06; margin:0 0 8px}
+    .hero .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:28px; box-shadow:0 16px 60px #0005; font-family:var(--body-font)}
+    .hero h1{font-size: clamp(28px, 2.8vw + 12px, 64px); line-height:1.06; margin:0 0 8px; font-weight:800}
     .hero p{color:var(--muted); margin:0}
 
     .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
-    .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:20px}
-    .card h3{margin:.2rem 0 .3rem}
+    .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:20px; font-family:var(--body-font)}
+    .card h3{margin:.2rem 0 .3rem; font-family:var(--heading-font)}
     .muted{color:var(--muted)}
-    .kicker{font-size:.9rem; text-transform:uppercase; letter-spacing:.18em; color:var(--muted)}
+    .kicker{font-size:.9rem; text-transform:uppercase; letter-spacing:.18em; color:var(--muted); font-family:var(--heading-font)}
 
     @media (max-width:1000px){ .hero{grid-template-columns:1fr} .grid{grid-template-columns:1fr 1fr} }
     @media (max-width:640px){ .grid{grid-template-columns:1fr} }
 
-    footer{padding:56px 0 80px; color:var(--muted)}
+    footer{padding:56px 0 80px; color:var(--muted); font-family:var(--body-font)}
     footer a{color:inherit}
   </style>
 </head>
@@ -103,7 +102,6 @@
   </header>
 
   <main id="content" class="wrap">
-    <!-- HERO / INTRO -->
     <section id="about" aria-labelledby="about-h">
       <div class="hero">
         <div>
@@ -122,7 +120,6 @@
       </div>
     </section>
 
-    <!-- WORK -->
     <section id="work" aria-labelledby="work-h" style="padding:28px 0 8px">
       <h2 id="work-h">Selected Work</h2>
       <p class="muted">Swap these cards with your real projects. Keep titles short; add a one‑liner under each.</p>
@@ -133,7 +130,6 @@
       </div>
     </section>
 
-    <!-- RESEARCH -->
     <section id="research" aria-labelledby="research-h" style="padding:28px 0 8px">
       <h2 id="research-h">Research</h2>
       <div class="grid" style="margin-top:12px">
@@ -143,7 +139,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" aria-labelledby="contact-h" style="padding:28px 0 8px">
       <h2 id="contact-h">Contact</h2>
       <div class="card">
@@ -157,7 +152,6 @@
   </footer>
 
   <script>
-    // ====== Mobile menu toggle ======
     const toggle = document.querySelector('.nav-toggle');
     const menu = document.getElementById('menu');
     toggle.addEventListener('click', () => {
@@ -166,7 +160,6 @@
       toggle.setAttribute('aria-expanded', String(!open));
     });
 
-    // Close menu after clicking a link (mobile)
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       if (getComputedStyle(toggle).display !== 'none') {
         menu.setAttribute('aria-expanded', 'false');
@@ -174,7 +167,6 @@
       }
     }));
 
-    // ====== Scroll progress bar ======
     const bar = document.getElementById('bar');
     const setProgress = () => {
       const h = document.documentElement;
@@ -184,7 +176,6 @@
     setProgress();
     document.addEventListener('scroll', setProgress, {passive:true});
 
-    // ====== Scroll‑spy (active section highlighting) ======
     const links = Array.from(document.querySelectorAll('[data-spy]'));
     const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
 
@@ -201,7 +192,6 @@
 
     sections.forEach(s => spy.observe(s));
 
-    // ====== Year in footer ======
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
