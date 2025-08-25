@@ -6,7 +6,7 @@
   <title>Ava Tartakovsky — Portfolio</title>
   <meta name="description" content="A minimal portfolio with a sticky navigation bar, scroll-spy highlighting, and progress indicator. Single-file and GitHub Pages ready."/>
 
-  <!-- ====== Custom Fonts (Google Fonts Example) ====== -->
+  <!-- ====== Custom Fonts (Google Fonts) ====== -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -25,13 +25,11 @@
       --heading-font: 'Poppins', sans-serif;
       --body-font: 'Quicksand', sans-serif;
       --menu-font: 'Poppins', sans-serif;
-      --initials-color: #888; /* grey for initials */
-      --progress-color: #888; /* grey for progress bar */
+      --progress-color: #9e9e9e; /* grey for progress bar */
     }
     @media (prefers-color-scheme: light){
       :root{
-        --bg:#f8f9fe; --surface:#ffffffcc; --text:#161821; --muted:#4a4f62; --accent:#3b5bff; --ring:#3aa3ff; --card:#ffffff;
-        --initials-color:#666; --progress-color:#666;
+        --bg:#f8f9fe; --surface:#ffffffcc; --text:#161821; --muted:#4a4f62; --accent:#3b5bff; --ring:#3aa3ff; --card:#ffffff; --progress-color:#7d7d7d;
       }
     }
     *{box-sizing:border-box}
@@ -39,24 +37,28 @@
     @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
     body{
       margin:0; font: 400 16px/1.65 var(--body-font);
-      color:var(--text); background:radial-gradient(80rem 60rem at 10% -20%, #233 0%, transparent 60%), radial-gradient(50rem 40rem at 110% 0%, #223 0%, transparent 55%), var(--bg);
+      color:var(--text);
+      background:radial-gradient(80rem 60rem at 10% -20%, #233 0%, transparent 60%), radial-gradient(50rem 40rem at 110% 0%, #223 0%, transparent 55%), var(--bg);
     }
     h1, h2, h3{font-family:var(--heading-font)}
     .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 
+    /* ===== Accessibility ===== */
     .skip-link{position:absolute; left:-9999px; top:0; background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px #0003}
     .skip-link:focus{left:12px; top:12px; outline:3px solid var(--ring)}
 
+    /* ===== Header / Sticky Nav ===== */
     header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:var(--surface); border-bottom:1px solid #ffffff20}
     .nav{display:flex; align-items:center; justify-content:space-between; height:var(--nav-h)}
     .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px; font-family:var(--heading-font)}
-    .brand .initials{display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--initials-color); color:#fff; font-size:.8rem; font-weight:600}
+    .brand .blob{display:inline-block}
 
     .nav ul{list-style:none; display:flex; gap:.75rem; margin:0; padding:0}
     .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px; font-family:var(--menu-font)}
     .nav a:hover{color:var(--text); background:#ffffff10}
     .nav a[aria-current="true"], .nav a.is-active{color:var(--text); background:#ffffff1a; box-shadow: inset 0 0 0 1px #ffffff20}
 
+    /* Mobile menu */
     .nav-toggle{display:none; background:transparent; border:1px solid #ffffff30; color:var(--text); padding:.5rem .7rem; border-radius:10px}
     .nav-toggle:focus-visible{outline:3px solid var(--ring)}
     @media (max-width: 900px){
@@ -65,9 +67,11 @@
       .nav-toggle{display:inline-flex}
     }
 
+    /* ===== Progress bar (under header) ===== */
     .progress{height:3px; background:#ffffff1a; position:relative}
     .progress > i{position:absolute; inset:0; width:0; background:var(--progress-color); transform-origin:left;}
 
+    /* ===== Main content ===== */
     main{padding:48px 0 80px}
     section{scroll-margin-top: calc(var(--nav-h) + 16px);}
     .hero{display:grid; grid-template-columns: 1.1fr .9fr; gap:2rem; align-items:center; padding:48px 0}
@@ -86,14 +90,27 @@
 
     footer{padding:56px 0 80px; color:var(--muted); font-family:var(--body-font)}
     footer a{color:inherit}
+
+    /* ===== Animated p5.js background canvas ===== */
+    #bg-canvas{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.6;}
   </style>
 </head>
 <body>
+  <!-- p5.js background will mount here -->
+  <div id="bg"></div>
+
   <a class="skip-link" href="#content">Skip to content</a>
 
   <header>
     <div class="wrap nav" role="navigation" aria-label="Primary">
-      <div class="brand"><span class="initials">AT</span> <span>Ava Tartakovsky</span></div>
+      <div class="brand">
+        <!-- Abstract light-grey blob with initials -->
+        <svg class="blob" width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
+          <path fill="#bdbdbd" d="M79.6,59.2c-6.7,16-24.7,23.1-39,17.2c-11.5-4.7-20-16.2-19.1-28.5c1-13.5,11.4-25.8,25.2-28.2 c14.5-2.6,30.1,6.2,34.1,20.2C82,46.2,82.1,53,79.6,59.2z"/>
+          <text x="50" y="58" text-anchor="middle" font-size="38" font-family="Poppins, sans-serif" fill="#ffffff" font-weight="700">AT</text>
+        </svg>
+        <span>Ava Tartakovsky</span>
+      </div>
       <button class="nav-toggle" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">☰</button>
       <ul id="menu" role="menubar" aria-expanded="false">
         <li role="none"><a role="menuitem" href="#about" data-spy>About</a></li>
@@ -106,6 +123,7 @@
   </header>
 
   <main id="content" class="wrap">
+    <!-- HERO / INTRO -->
     <section id="about" aria-labelledby="about-h">
       <div class="hero">
         <div>
@@ -124,9 +142,10 @@
       </div>
     </section>
 
+    <!-- WORK -->
     <section id="work" aria-labelledby="work-h" style="padding:28px 0 8px">
       <h2 id="work-h">Selected Work</h2>
-      <p class="muted">Swap these cards with your real projects. Keep titles short; add a one-liner under each.</p>
+      <p class="muted">Swap these cards with your real projects. Keep titles short; add a one‑liner under each.</p>
       <div class="grid" style="margin-top:12px">
         <article class="card"><h3>Project Alpha</h3><p class="muted">Interactive installation exploring data visualization</p></article>
         <article class="card"><h3>Project Beta</h3><p class="muted">Web app for collaborative music creation</p></article>
@@ -134,6 +153,7 @@
       </div>
     </section>
 
+    <!-- RESEARCH -->
     <section id="research" aria-labelledby="research-h" style="padding:28px 0 8px">
       <h2 id="research-h">Research</h2>
       <div class="grid" style="margin-top:12px">
@@ -143,6 +163,7 @@
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" aria-labelledby="contact-h" style="padding:28px 0 8px">
       <h2 id="contact-h">Contact</h2>
       <div class="card">
@@ -155,7 +176,60 @@
     <small>© <span id="year"></span> Ava Tartakovsky. Built with vanilla HTML/CSS/JS. Hosted on GitHub Pages.</small>
   </footer>
 
+  <!-- p5.js for animated background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
+    // ===== p5.js light grey "lava lamp" background =====
+    let blobs = [];
+    const NUM = 6; // number of blobs
+
+    class Blob {
+      constructor() {
+        this.r = random(90, 160);
+        this.xOff = random(1000);
+        this.yOff = random(1000, 2000);
+        this.speed = random(0.001, 0.0025);
+        this.base = createVector(random(windowWidth), random(windowHeight));
+      }
+      update() {
+        this.base.x = noise(this.xOff) * windowWidth;
+        this.base.y = noise(this.yOff) * windowHeight;
+        this.xOff += this.speed;
+        this.yOff += this.speed * 1.2;
+      }
+      draw() {
+        noStroke();
+        // two layered fills for subtle depth
+        fill(255, 255, 255, 28); // soft white
+        ellipse(this.base.x, this.base.y, this.r * 1.15, this.r * 1.15);
+        fill(210, 210, 210, 35); // light grey
+        ellipse(this.base.x + 8, this.base.y + 6, this.r, this.r);
+      }
+    }
+
+    let s = (p) => {
+      p.setup = () => {
+        const c = p.createCanvas(p.windowWidth, p.windowHeight);
+        c.id('bg-canvas');
+        c.parent('bg');
+        p.frameRate(60);
+        for (let i = 0; i < NUM; i++) blobs.push(new Blob());
+      };
+      p.windowResized = () => {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+      };
+      p.draw = () => {
+        p.clear(); // keep the site gradient visible
+        p.blendMode(p.SOFT_LIGHT);
+        blobs.forEach(b => { b.update(); b.draw(); });
+        p.blendMode(p.BLEND);
+      };
+    };
+    new p5(s);
+  </script>
+
+  <script>
+    // ===== UI scripts =====
     const toggle = document.querySelector('.nav-toggle');
     const menu = document.getElementById('menu');
     toggle.addEventListener('click', () => {
@@ -164,6 +238,7 @@
       toggle.setAttribute('aria-expanded', String(!open));
     });
 
+    // Close on link click (mobile)
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       if (getComputedStyle(toggle).display !== 'none') {
         menu.setAttribute('aria-expanded', 'false');
@@ -171,6 +246,7 @@
       }
     }));
 
+    // Scroll progress
     const bar = document.getElementById('bar');
     const setProgress = () => {
       const h = document.documentElement;
@@ -180,9 +256,9 @@
     setProgress();
     document.addEventListener('scroll', setProgress, {passive:true});
 
+    // Scroll‑spy
     const links = Array.from(document.querySelectorAll('[data-spy]'));
     const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
-
     const spy = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const id = entry.target.getAttribute('id');
@@ -193,9 +269,9 @@
         }
       });
     }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 });
-
     sections.forEach(s => spy.observe(s));
 
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
