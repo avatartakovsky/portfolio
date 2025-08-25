@@ -1,87 +1,208 @@
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sticky Navigation</title>
-    <link rel="stylesheet" href="styles.css">
-    <!--
-    PATTERN: Sticky Navigation
-    DEMONSTRATES: Clean sticky header with scroll behavior, progress indicator
-    ENHANCEMENTS: Add scroll-based nav highlighting, hide/show on scroll direction, mobile collapsing
-    -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name — Portfolio</title>
+  <meta name="description" content="A minimal portfolio with a sticky navigation bar, scroll‑spy highlighting, and progress indicator. Single‑file and GitHub Pages ready."/>
+  <style>
+    /* ====== Theme ====== */
+    :root{
+      --bg: #0b0c10;
+      --surface: #111218cc; /* translucent for blur */
+      --text: #f5f7ff;
+      --muted: #c9ccda;
+      --accent: #8b9dff;
+      --ring: #9ad0ff;
+      --card: #14161f;
+      --maxw: 90rem;
+      --nav-h: 64px; /* header height */
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f8f9fe; --surface:#ffffffcc; --text:#161821; --muted:#4a4f62; --accent:#3b5bff; --ring:#3aa3ff; --card:#ffffff;
+      }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+    body{
+      margin:0; font: 500 16px/1.65 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background:radial-gradient(80rem 60rem at 10% -20%, #233 0%, transparent 60%), radial-gradient(50rem 40rem at 110% 0%, #223 0%, transparent 55%), var(--bg);
+    }
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+
+    /* ====== Skip link ====== */
+    .skip-link{position:absolute; left:-9999px; top:0; background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px #0003}
+    .skip-link:focus{left:12px; top:12px; outline:3px solid var(--ring)}
+
+    /* ====== Header / Sticky Nav ====== */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px);
+      background:var(--surface); border-bottom:1px solid #ffffff20;
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; height:var(--nav-h)}
+    .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px}
+    .brand .dot{display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--accent)}
+
+    .nav ul{list-style:none; display:flex; gap:.75rem; margin:0; padding:0}
+    .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px}
+    .nav a:hover{color:var(--text); background:#ffffff10}
+    .nav a[aria-current="true"], .nav a.is-active{color:var(--text); background:#ffffff1a; box-shadow: inset 0 0 0 1px #ffffff20}
+
+    /* Mobile menu */
+    .nav-toggle{display:none; background:transparent; border:1px solid #ffffff30; color:var(--text); padding:.5rem .7rem; border-radius:10px}
+    .nav-toggle:focus-visible{outline:3px solid var(--ring)}
+    @media (max-width: 900px){
+      .nav ul{position:fixed; inset:calc(var(--nav-h) + 8px) 12px auto 12px; background:var(--card); border:1px solid #ffffff20; border-radius:14px; box-shadow:0 16px 60px #0005; padding:10px; flex-direction:column; gap:4px; display:none}
+      .nav ul[aria-expanded="true"]{display:flex}
+      .nav-toggle{display:inline-flex}
+    }
+
+    /* ====== Progress bar (under header) ====== */
+    .progress{height:3px; background:#ffffff1a; position:relative}
+    .progress > i{position:absolute; inset:0; width:0; background:linear-gradient(90deg, var(--accent), #66e1ff); transform-origin:left;}
+
+    /* ====== Main content ====== */
+    main{padding:48px 0 80px}
+    section{scroll-margin-top: calc(var(--nav-h) + 16px);}
+    .hero{display:grid; grid-template-columns: 1.1fr .9fr; gap:2rem; align-items:center; padding:48px 0}
+    .hero .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:28px; box-shadow:0 16px 60px #0005}
+    .hero h1{font-size: clamp(28px, 2.8vw + 12px, 64px); line-height:1.06; margin:0 0 8px}
+    .hero p{color:var(--muted); margin:0}
+
+    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:20px}
+    .card h3{margin:.2rem 0 .3rem}
+    .muted{color:var(--muted)}
+    .kicker{font-size:.9rem; text-transform:uppercase; letter-spacing:.18em; color:var(--muted)}
+
+    @media (max-width:1000px){ .hero{grid-template-columns:1fr} .grid{grid-template-columns:1fr 1fr} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} }
+
+    footer{padding:56px 0 80px; color:var(--muted)}
+    footer a{color:inherit}
+  </style>
 </head>
-<body><a href="#main" style="position: absolute; left: -9999px; z-index: 1000; padding: 8px; background: rgb(0, 0, 0); color: rgb(255, 255, 255); text-decoration: none;">Skip to main content</a>
-    <header class="header" id="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <a href="#home">Portfolio</a>
-            </div>
-            <ul class="nav-list">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#work" class="nav-link">Work</a></li>
-                <li><a href="#research" class="nav-link">Research</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="scroll-progress" id="scrollProgress" style="transform: scaleX(0);"></div>
-    </header>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
 
-    <main>
-        <section id="home" class="hero">
-            <h1>Welcome</h1>
-            <p>Scroll down to see the sticky navigation in action</p>
-        </section>
+  <header>
+    <div class="wrap nav" role="navigation" aria-label="Primary">
+      <div class="brand"><span class="dot" aria-hidden="true"></span> <span>Your Name</span></div>
+      <button class="nav-toggle" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">☰</button>
+      <ul id="menu" role="menubar" aria-expanded="false">
+        <li role="none"><a role="menuitem" href="#about" data-spy>About</a></li>
+        <li role="none"><a role="menuitem" href="#work" data-spy>Work</a></li>
+        <li role="none"><a role="menuitem" href="#research" data-spy>Research</a></li>
+        <li role="none"><a role="menuitem" href="#contact" data-spy>Contact</a></li>
+      </ul>
+    </div>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+  </header>
 
-        <section id="about" class="content-section">
-            <h2>About</h2>
-            <p>This section demonstrates how the navigation bar sticks to the top as you scroll. The navigation provides consistent access to all major sections of the site while maintaining visual feedback about scroll progress.</p>
-            <p>The sticky behavior is implemented using CSS position: sticky with JavaScript enhancements for accessibility and user experience improvements.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </section>
+  <main id="content" class="wrap">
+    <!-- HERO / INTRO -->
+    <section id="about" aria-labelledby="about-h">
+      <div class="hero">
+        <div>
+          <p class="kicker">Hello</p>
+          <h1 id="about-h">Designer & Developer</h1>
+          <p class="muted">This is a clean, single‑file portfolio starter with a sticky navigation bar that stays visible as you scroll, an active‑section highlight, and a scroll progress indicator. Drop it into GitHub Pages and you’re live.</p>
+        </div>
+        <div class="card">
+          <h2>Quick facts</h2>
+          <ul>
+            <li>Location: Anywhere</li>
+            <li>Focus: UX • Creative Tech • Research</li>
+            <li>Open to: Collabs, internships, freelance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-        <section id="work" class="content-section">
-            <h2>Work</h2>
-            <p>Notice how the navigation remains accessible as you scroll through different sections. The active section is highlighted in the navigation menu.</p>
-            <div class="work-grid">
-                <div class="work-item">
-                    <h3>Project Alpha</h3>
-                    <p>Interactive installation exploring data visualization</p>
-                </div>
-                <div class="work-item">
-                    <h3>Project Beta</h3>
-                    <p>Web application for collaborative music creation</p>
-                </div>
-                <div class="work-item">
-                    <h3>Project Gamma</h3>
-                    <p>Research on human-computer interaction in creative contexts</p>
-                </div>
-            </div>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-        </section>
+    <!-- WORK -->
+    <section id="work" aria-labelledby="work-h" style="padding:28px 0 8px">
+      <h2 id="work-h">Selected Work</h2>
+      <p class="muted">Swap these cards with your real projects. Keep titles short; add a one‑liner under each.</p>
+      <div class="grid" style="margin-top:12px">
+        <article class="card"><h3>Project Alpha</h3><p class="muted">Interactive installation exploring data visualization</p></article>
+        <article class="card"><h3>Project Beta</h3><p class="muted">Web app for collaborative music creation</p></article>
+        <article class="card"><h3>Project Gamma</h3><p class="muted">HCI research in creative contexts</p></article>
+      </div>
+    </section>
 
-        <section id="research" class="content-section">
-            <h2>Research</h2>
-            <p>The scroll progress indicator at the bottom of the navigation provides visual feedback about position within the page content.</p>
-            <blockquote>
-                "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident."
-            </blockquote>
-            <p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
-            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-            <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-        </section>
+    <!-- RESEARCH -->
+    <section id="research" aria-labelledby="research-h" style="padding:28px 0 8px">
+      <h2 id="research-h">Research</h2>
+      <div class="grid" style="margin-top:12px">
+        <article class="card"><h3>Paper One</h3><p class="muted">A short abstract or takeaway lives here.</p></article>
+        <article class="card"><h3>Paper Two</h3><p class="muted">Add a DOI or link to the PDF.</p></article>
+        <article class="card"><h3>Talk</h3><p class="muted">Conference talk with slides and recording.</p></article>
+      </div>
+    </section>
 
-        <section id="contact" class="content-section">
-            <h2>Contact</h2>
-            <p>You've reached the bottom! Notice how the navigation behavior adapts and remains accessible throughout the scrolling experience.</p>
-            <div class="contact-info">
-                <p>Email: hello@example.com</p>
-                <p>Location: San Francisco, CA</p>
-            </div>
-            <p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-        </section>
-    </main>
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-h" style="padding:28px 0 8px">
+      <h2 id="contact-h">Contact</h2>
+      <div class="card">
+        <p class="muted">Email <a href="mailto:you@example.com">you@example.com</a> • Based in San Francisco, CA</p>
+      </div>
+    </section>
+  </main>
 
-    <script src="script.js"></script>
+  <footer class="wrap">
+    <small>© <span id="year"></span> Your Name. Built with vanilla HTML/CSS/JS. Hosted on GitHub Pages.</small>
+  </footer>
 
-</body></html>
+  <script>
+    // ====== Mobile menu toggle ======
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => {
+      const open = menu.getAttribute('aria-expanded') === 'true';
+      menu.setAttribute('aria-expanded', String(!open));
+      toggle.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Close menu after clicking a link (mobile)
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      if (getComputedStyle(toggle).display !== 'none') {
+        menu.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    }));
+
+    // ====== Scroll progress bar ======
+    const bar = document.getElementById('bar');
+    const setProgress = () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      bar.style.width = (scrolled * 100).toFixed(2) + '%';
+    };
+    setProgress();
+    document.addEventListener('scroll', setProgress, {passive:true});
+
+    // ====== Scroll‑spy (active section highlighting) ======
+    const links = Array.from(document.querySelectorAll('[data-spy]'));
+    const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const link = links.find(l => l.getAttribute('href') === '#' + id);
+        if (entry.isIntersecting) {
+          links.forEach(a => { a.removeAttribute('aria-current'); a.classList.remove('is-active'); });
+          if (link) { link.setAttribute('aria-current', 'true'); link.classList.add('is-active'); }
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 });
+
+    sections.forEach(s => spy.observe(s));
+
+    // ====== Year in footer ======
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
