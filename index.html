@@ -91,8 +91,14 @@
     footer{padding:56px 0 80px; color:var(--muted); font-family:var(--body-font)}
     footer a{color:inherit}
 
+    /* Keep content above the canvas */
+    header, main, footer { position: relative; z-index: 1; }
+
     /* ===== Animated p5.js background canvas ===== */
-    #bg-canvas{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.6;}
+    #bg-canvas{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.6;}
+
+    /* ===== Animated p5.js background canvas ===== */
+    #bg-canvas{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.6;}
   </style>
 </head>
 <body>
@@ -107,7 +113,7 @@
         <!-- Abstract light-grey blob with initials -->
         <svg class="blob" width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
           <path fill="#bdbdbd" d="M79.6,59.2c-6.7,16-24.7,23.1-39,17.2c-11.5-4.7-20-16.2-19.1-28.5c1-13.5,11.4-25.8,25.2-28.2 c14.5-2.6,30.1,6.2,34.1,20.2C82,46.2,82.1,53,79.6,59.2z"/>
-          <text x="50" y="58" text-anchor="middle" font-size="38" font-family="Poppins, sans-serif" fill="#ffffff" font-weight="700">AT</text>
+          <text x="50" y="58" text-anchor="middle" font-size="30" font-family="Poppins, sans-serif" fill="#ffffff" font-weight="700">AT</text>
         </svg>
         <span>Ava Tartakovsky</span>
       </div>
@@ -127,16 +133,16 @@
     <section id="about" aria-labelledby="about-h">
       <div class="hero">
         <div>
-          <p class="kicker">Hello</p>
-          <h1 id="about-h">Designer & Developer</h1>
-          <p class="muted">This is a clean, single-file portfolio starter with a sticky navigation bar that stays visible as you scroll, an active-section highlight, and a scroll progress indicator. Drop it into GitHub Pages and you’re live.</p>
+          <p class="kicker">HOME</p>
+          <h1 id="about-h">Ava Tartakovsky</h1>
+          <p class="muted">I am a senior at UCSB studying to major in Sociology, minor in Media, Arts, and Technology, and a certificate in Technology Management. I specialize in photography and design and am looking to experiment with new concepts and methods.</p>
         </div>
         <div class="card">
           <h2>Quick facts</h2>
           <ul>
-            <li>Location: Anywhere</li>
-            <li>Focus: UX • Creative Tech • Research</li>
-            <li>Open to: Collabs, internships, freelance</li>
+            <li>Location: Los Angeles and Santa Barbara</li>
+            <li>Focus: Graphic Desgin, Photography, Interior Design, and Calligraphy</li>
+            <li>Open to: Collabs and internships </li>
           </ul>
         </div>
       </div>
@@ -179,35 +185,50 @@
   <!-- p5.js for animated background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    // ===== p5.js light grey "lava lamp" background =====
-    let blobs = [];
-    const NUM = 6; // number of blobs
-
-    class Blob {
-      constructor() {
-        this.r = random(90, 160);
-        this.xOff = random(1000);
-        this.yOff = random(1000, 2000);
-        this.speed = random(0.001, 0.0025);
-        this.base = createVector(random(windowWidth), random(windowHeight));
-      }
-      update() {
-        this.base.x = noise(this.xOff) * windowWidth;
-        this.base.y = noise(this.yOff) * windowHeight;
-        this.xOff += this.speed;
-        this.yOff += this.speed * 1.2;
-      }
-      draw() {
-        noStroke();
-        // two layered fills for subtle depth
-        fill(255, 255, 255, 28); // soft white
-        ellipse(this.base.x, this.base.y, this.r * 1.15, this.r * 1.15);
-        fill(210, 210, 210, 35); // light grey
-        ellipse(this.base.x + 8, this.base.y + 6, this.r, this.r);
-      }
-    }
-
+    // ===== p5.js light grey "lava lamp" background (more motion) =====
     let s = (p) => {
+      let blobs = [];
+      const NUM = 8; // number of blobs (more = fuller motion)
+      let t = 0;     // global time for noise field
+
+      class Blob {
+        constructor() {
+          this.r0 = p.random(90, 150); // base radius
+          this.r = this.r0;
+          this.pos = p.createVector(p.random(p.width), p.random(p.height));
+          this.xOff = p.random(1000);
+          this.yOff = p.random(2000);
+          this.speed = p.random(0.006, 0.012); // faster than before for constant motion
+        }
+        update() {
+          // Direction from a 2D noise field
+          const angle = p.noise(this.xOff + t, this.yOff - t) * p.TWO_PI * 2.0;
+          const vel = p5.Vector.fromAngle(angle).mult(0.8); // velocity magnitude
+          this.pos.add(vel);
+
+          // Animate size a bit
+          this.r = this.r0 * (0.9 + 0.15 * p.sin(t * 1.8 + this.xOff));
+
+          // Wrap around edges for seamless motion
+          if (this.pos.x < -200) this.pos.x = p.width + 200;
+          if (this.pos.x > p.width + 200) this.pos.x = -200;
+          if (this.pos.y < -200) this.pos.y = p.height + 200;
+          if (this.pos.y > p.height + 200) this.pos.y = -200;
+
+          // advance noise offsets for variety
+          this.xOff += this.speed;
+          this.yOff += this.speed * 1.1;
+        }
+        draw() {
+          p.noStroke();
+          // two layered fills for subtle depth (white and light grey)
+          p.fill(255, 255, 255, 30);
+          p.ellipse(this.pos.x, this.pos.y, this.r * 1.18, this.r * 1.18);
+          p.fill(210, 210, 210, 42);
+          p.ellipse(this.pos.x + 10, this.pos.y + 8, this.r, this.r);
+        }
+      }
+
       p.setup = () => {
         const c = p.createCanvas(p.windowWidth, p.windowHeight);
         c.id('bg-canvas');
@@ -219,10 +240,12 @@
         p.resizeCanvas(p.windowWidth, p.windowHeight);
       };
       p.draw = () => {
-        p.clear(); // keep the site gradient visible
+        // Clear fully each frame so motion is crisp
+        p.clear();
         p.blendMode(p.SOFT_LIGHT);
         blobs.forEach(b => { b.update(); b.draw(); });
         p.blendMode(p.BLEND);
+        t += 0.005; // advance global time
       };
     };
     new p5(s);
