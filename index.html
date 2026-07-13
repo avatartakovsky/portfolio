@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ava Tartakovsky — Portfolio</title>
-  <meta name="description" content="A minimal portfolio with a sticky navigation bar, scroll-spy highlighting, and progress indicator. Single-file and GitHub Pages ready."/>
+  <meta name="description" content="Portfolio of Ava Tartakovsky, a Los Angeles-based creative with experience in interior design, photography, luxury hospitality, event production, and visual content."/>
 
   <!-- ====== Custom Fonts (Google Fonts) ====== -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -115,7 +115,37 @@
       border-top:1px solid #ffffff12;
     }
 
-    @media (max-width:1000px){ .hero{grid-template-columns:1fr} .media-grid{grid-template-columns:1fr 1fr} }
+
+    /* ===== Resume sections ===== */
+    .section-heading{margin:0 0 16px}
+    .resume-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:18px;
+      margin-top:12px;
+    }
+    .resume-card{
+      background:var(--card);
+      border:1px solid #ffffff1f;
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:0 10px 40px rgba(0,0,0,.22);
+    }
+    .resume-card h3{margin:0 0 4px; font-size:1.08rem}
+    .resume-card .meta{margin:0 0 10px; color:var(--muted); font-size:.92rem}
+    .resume-card p{margin:0; color:var(--muted)}
+    .resume-card ul{margin:10px 0 0; padding-left:20px; color:var(--muted)}
+    .skill-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+    .skill{
+      padding:7px 11px;
+      border-radius:999px;
+      background:#ffffff10;
+      border:1px solid #ffffff1c;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @media (max-width:1000px){ .hero{grid-template-columns:1fr} .media-grid{grid-template-columns:1fr 1fr} .resume-grid{grid-template-columns:1fr} }
     @media (max-width:640px){ .media-grid{grid-template-columns:1fr} }
 
     footer{padding:56px 0 80px; color:var(--muted); font-family:var(--body-font)}
@@ -147,6 +177,7 @@
       <button class="nav-toggle" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">☰</button>
       <ul id="menu" role="menubar" aria-expanded="false">
         <li role="none"><a role="menuitem" href="#about" data-spy>About</a></li>
+        <li role="none"><a role="menuitem" href="#experience" data-spy>Experience</a></li>
         <li role="none"><a role="menuitem" href="#gallery" data-spy>Gallery</a></li>
         <li role="none"><a role="menuitem" href="#contact" data-spy>Contact</a></li>
       </ul>
@@ -161,16 +192,75 @@
         <div>
           <p class="kicker">PORTFOLIO</p>
           <h1 id="about-h">Ava Tartakovsky</h1>
-          <p class="muted">I am a senior at UCSB majoring in Sociology, minoring in Media, Arts & Technology, with a Technology Management certificate. I specialize in photography and design, and I’m exploring new concepts and methods.</p>
+          <p class="muted">I am a Los Angeles-based creative and recent UC Santa Barbara graduate with experience in interior design, photography, luxury hospitality, event production, and visual content. I enjoy combining strong organization with a thoughtful visual perspective to support polished, detail-driven projects.</p>
         </div>
         <div class="card">
           <h2>Quick facts</h2>
           <ul>
-            <li>Location: Los Angeles & Santa Barbara</li>
-            <li>Focus: Graphic Design, Photography, Interior Design, Calligraphy</li>
-            <li>Open to: Collaborations & internships</li>
+            <li>Location: Los Angeles, California</li>
+            <li>Education: Sociology B.A., Media Arts &amp; Design Minor, Technology Management Certificate</li>
+            <li>Focus: Interior Design, Photography, Graphic Design, and Creative Production</li>
+            <li>Open to: Interior design and creative assistant opportunities</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+
+    <!-- EXPERIENCE -->
+    <section id="experience" aria-labelledby="experience-h" style="padding:28px 0 8px">
+      <h2 id="experience-h" class="section-heading">Experience</h2>
+      <div class="resume-grid">
+        <article class="resume-card">
+          <h3>Interior Design Assistant &amp; Photographer</h3>
+          <p class="meta">Janette Mallory Interiors · Montecito, CA · June–September 2025</p>
+          <p>Supported residential design projects through material and sample sourcing, finish and furnishing research, on-site photography, and the organization and editing of visual assets.</p>
+        </article>
+
+        <article class="resume-card">
+          <h3>Host</h3>
+          <p class="meta">Caruso’s at Rosewood Miramar · Montecito, CA · March–June 2026</p>
+          <p>Delivered polished service in a luxury hospitality environment by managing reservations, tracking VIP preferences, coordinating dining room flow, and communicating guest needs.</p>
+        </article>
+
+        <article class="resume-card">
+          <h3>Event Production Intern</h3>
+          <p class="meta">Levine Fox Events / Alyson Fox · Studio City, CA · 2022–Present</p>
+          <p>Assist with client events by building presentation decks, coordinating vendors, tracking expenses, handling administrative tasks, and creating social media content.</p>
+        </article>
+
+        <article class="resume-card">
+          <h3>Social Media Manager</h3>
+          <p class="meta">Genndy Tartakovsky · Los Angeles, CA · 2019–Present</p>
+          <p>Create and organize content plans, maintain a consistent visual presence, support audience growth, and communicate with potential business partners.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EDUCATION & SKILLS -->
+    <section id="education" aria-labelledby="education-h" style="padding:28px 0 8px">
+      <h2 id="education-h" class="section-heading">Education &amp; Skills</h2>
+      <div class="resume-grid">
+        <article class="resume-card">
+          <h3>University of California, Santa Barbara</h3>
+          <p class="meta">Graduated March 2026 · GPA 3.7</p>
+          <p>Sociology major, Media Arts &amp; Design minor, and Technology Management Certificate. Semester abroad at the University of Barcelona in Fall 2024.</p>
+        </article>
+
+        <article class="resume-card">
+          <h3>Technical &amp; Creative Skills</h3>
+          <div class="skill-list" aria-label="Skills">
+            <span class="skill">Adobe Photoshop</span>
+            <span class="skill">Google Workspace</span>
+            <span class="skill">Microsoft Office</span>
+            <span class="skill">Excel</span>
+            <span class="skill">Procreate</span>
+            <span class="skill">Blender</span>
+            <span class="skill">Photography</span>
+            <span class="skill">Graphic Design</span>
+            <span class="skill">Calligraphy</span>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -183,7 +273,7 @@
           <div class="media-frame">
             <video src="Cindy%204K0001-1525.MOV" playsinline controls preload="metadata"></video>
           </div>
-          <figcaption class="media-caption">cindy</figcaption>
+          <figcaption class="media-caption">Creative Video Project</figcaption>
         </figure>
 
         <!-- IMAGES -->
@@ -191,49 +281,49 @@
           <div class="media-frame">
             <img src="4C8B4DE8-2437-4AFC-9D1C-123467AD9366%202.JPG" alt="4C8B4DE8 image" loading="lazy">
           </div>
-          <figcaption class="media-caption">4C8B4DE8-… 2.JPG</figcaption>
+          <figcaption class="media-caption">Interior &amp; Detail Photography</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="DSC_0592.JPG" alt="DSC_0592" loading="lazy">
           </div>
-          <figcaption class="media-caption">DSC_0592.JPG</figcaption>
+          <figcaption class="media-caption">Photography Study</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="DSC_0755.JPG" alt="DSC_0755" loading="lazy">
           </div>
-          <figcaption class="media-caption">DSC_0755.JPG</figcaption>
+          <figcaption class="media-caption">Photography Study</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="DSC_0849.JPG" alt="DSC_0849" loading="lazy">
           </div>
-          <figcaption class="media-caption">DSC_0849.JPG</figcaption>
+          <figcaption class="media-caption">Photography Study</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="DSC_0864.JPG" alt="DSC_0864" loading="lazy">
           </div>
-          <figcaption class="media-caption">DSC_0864.JPG</figcaption>
+          <figcaption class="media-caption">Photography Study</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="DSC_0901.JPG" alt="DSC_0901" loading="lazy">
           </div>
-          <figcaption class="media-caption">DSC_0901.JPG</figcaption>
+          <figcaption class="media-caption">Photography Study</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="IMG_6901.JPG" alt="IMG_6901" loading="lazy">
           </div>
-          <figcaption class="media-caption">IMG_6901.JPG</figcaption>
+          <figcaption class="media-caption">Creative Photography</figcaption>
         </figure>
 
         <!-- HEIC (may not render). Convert to JPG/PNG if needed. -->
@@ -241,21 +331,21 @@
           <div class="media-frame">
             <img src="IMG_6903%202.pdf" alt="IMG_6903 (HEIC — may need conversion)" loading="lazy">
           </div>
-          <figcaption class="media-caption">blue hands (convert for web)</figcaption>
+          <figcaption class="media-caption">Mixed-Media Study</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="IMG_8095%203.JPG" alt="IMG_8095 3" loading="lazy">
           </div>
-          <figcaption class="media-caption">IMG_8095 3.JPG</figcaption>
+          <figcaption class="media-caption">Creative Photography</figcaption>
         </figure>
 
         <figure class="media-card">
           <div class="media-frame">
             <img src="IMG_8097%202.JPG" alt="IMG_8097 2" loading="lazy">
           </div>
-          <figcaption class="media-caption">IMG_8097 2.JPG</figcaption>
+          <figcaption class="media-caption">Creative Photography</figcaption>
         </figure>
       </div>
     </section>
@@ -264,7 +354,7 @@
     <section id="contact" aria-labelledby="contact-h" style="padding:28px 0 8px">
       <h2 id="contact-h">Contact</h2>
       <div class="card">
-        <p class="muted">Email <a href="mailto:you@example.com">you@example.com</a> • Based in Los Angeles & Santa Barbara</p>
+        <p class="muted">Email <a href="mailto:avatartakovsky1@gmail.com">avatartakovsky1@gmail.com</a> • Los Angeles, California • <a href="tel:+18187984050">(818) 798-4050</a></p>
       </div>
     </section>
   </main>
