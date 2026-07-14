@@ -6,79 +6,93 @@
   <title>Ava Tartakovsky — Portfolio</title>
   <meta name="description" content="Portfolio of Ava Tartakovsky, a Los Angeles-based creative with experience in interior design, photography, luxury hospitality, event production, and visual content."/>
 
-  <!-- ====== Custom Fonts (Google Fonts) ====== -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- ====== Custom Fonts (Google Fonts): Fraunces (display serif), Inter (body), Space Mono (labels) ====== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ====== Theme ====== */
+    /* ====== Theme: warm plaster / ink / brass — same materials as the home page ====== */
     :root{
-      --bg: #0b0c10;
-      --surface: #111218cc;
-      --text: #f5f7ff;
-      --muted: #c9ccda;
-      --accent: #8b9dff;
-      --ring: #9ad0ff;
-      --card: #14161f;
+      --paper: #f5efe3;
+      --paper-deep: #ece2ce;
+      --paper-line: rgba(33,30,26,.12);
+      --ink: #211e1a;
+      --ink-muted: #6b6357;
+      --brass: #a9824e;
+      --brass-deep: #8c6b3e;
+      --clay: #9c5b42;
+      --card: var(--paper-deep);
       --maxw: 90rem;
       --nav-h: 64px;
       --radius: 16px;
-      --heading-font: 'Poppins', sans-serif;
-      --body-font: 'Quicksand', sans-serif;
-      --menu-font: 'Poppins', sans-serif;
-      --progress-color: #9e9e9e; /* grey for progress bar */
+      --heading-font: 'Fraunces', serif;
+      --body-font: 'Inter', sans-serif;
+      --label-font: 'Space Mono', monospace;
+      --progress-color: var(--brass);
+      --shadow: 0 20px 44px rgba(33,30,26,.16);
+      --shadow-soft: 0 8px 22px rgba(33,30,26,.09);
       --tile-ratio: 4 / 3;        /* tweak this to 1 / 1 for square tiles, 16 / 9 for widescreen */
-    }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f8f9fe; --surface:#ffffffcc; --text:#161821; --muted:#4a4f62; --accent:#3b5bff; --ring:#3aa3ff; --card:#ffffff; --progress-color:#7d7d7d;
-      }
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
     body{
-      margin:0; font: 400 16px/1.65 var(--body-font);
-      color:var(--text);
-      background:radial-gradient(80rem 60rem at 10% -20%, #233 0%, transparent 60%), radial-gradient(50rem 40rem at 110% 0%, #223 0%, transparent 55%), var(--bg);
+      margin:0; font: 400 16px/1.7 var(--body-font);
+      color:var(--ink);
+      background:
+        radial-gradient(1100px 760px at 6% -12%, rgba(169,130,78,.13), transparent 58%),
+        radial-gradient(900px 720px at 104% 4%, rgba(156,91,66,.09), transparent 55%),
+        var(--paper);
     }
-    h1, h2, h3{font-family:var(--heading-font)}
+    h1, h2, h3{font-family:var(--heading-font); font-weight:500; letter-spacing:-.01em}
     .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 
     /* ===== Accessibility ===== */
-    .skip-link{position:absolute; left:-9999px; top:0; background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px #0003}
-    .skip-link:focus{left:12px; top:12px; outline:3px solid var(--ring)}
+    .skip-link{position:absolute; left:-9999px; top:0; background:var(--card); color:var(--ink); padding:10px 14px; border-radius:10px; box-shadow:var(--shadow-soft)}
+    .skip-link:focus{left:12px; top:12px; outline:3px solid var(--brass-deep)}
 
     /* ===== Header / Sticky Nav ===== */
-    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:var(--surface); border-bottom:1px solid #ffffff20}
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px); background:rgba(245,239,227,.86); border-bottom:1px solid var(--paper-line)}
     .nav{display:flex; align-items:center; justify-content:space-between; height:var(--nav-h)}
-    .brand{display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px; font-family:var(--heading-font)}
+    .brand{display:flex; align-items:center; gap:.75rem; font-weight:600; letter-spacing:.01em; font-family:var(--heading-font); font-size:1.05rem}
     .brand .blob{display:inline-block}
 
-    .nav ul{list-style:none; display:flex; gap:.75rem; margin:0; padding:0}
-    .nav a{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--muted); padding:.55rem .8rem; border-radius:999px; font-family:var(--menu-font)}
-    .nav a:hover{color:var(--text); background:#ffffff10}
-    .nav a[aria-current="true"], .nav a.is-active{color:var(--text); background:#ffffff1a; box-shadow: inset 0 0 0 1px #ffffff20}
+    .nav ul{list-style:none; display:flex; gap:.5rem; margin:0; padding:0}
+    .nav a{
+      display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--ink-muted);
+      padding:.5rem .8rem; border-radius:999px; font-family:var(--label-font); font-size:.74rem;
+      letter-spacing:.1em; text-transform:uppercase;
+    }
+    .nav a:hover{color:var(--ink); background:rgba(169,130,78,.1)}
+    .nav a[aria-current="true"], .nav a.is-active{color:var(--ink); background:rgba(169,130,78,.16); box-shadow: inset 0 0 0 1px rgba(169,130,78,.35)}
 
     /* Mobile menu */
-    .nav-toggle{display:none; background:transparent; border:1px solid #ffffff30; color:var(--text); padding:.5rem .7rem; border-radius:10px}
-    .nav-toggle:focus-visible{outline:3px solid var(--ring)}
+    .nav-toggle{display:none; background:rgba(255,255,255,.35); border:1px solid var(--paper-line); color:var(--ink); padding:.5rem .7rem; border-radius:10px}
+    .nav-toggle:focus-visible{outline:3px solid var(--brass-deep)}
     @media (max-width: 900px){
-      .nav ul{position:fixed; inset:calc(var(--nav-h) + 8px) 12px auto 12px; background:var(--card); border:1px solid #ffffff20; border-radius:14px; box-shadow:0 16px 60px #0005; padding:10px; flex-direction:column; gap:4px; display:none}
+      .nav ul{position:fixed; inset:calc(var(--nav-h) + 8px) 12px auto 12px; background:var(--card); border:1px solid var(--paper-line); border-radius:14px; box-shadow:var(--shadow); padding:10px; flex-direction:column; gap:4px; display:none}
       .nav ul[aria-expanded="true"]{display:flex}
       .nav-toggle{display:inline-flex}
     }
 
     /* ===== Progress bar (under header) ===== */
-    .progress{height:3px; background:#ffffff1a; position:relative}
+    .progress{height:3px; background:var(--paper-line); position:relative}
     .progress > i{position:absolute; inset:0; width:0; background:var(--progress-color); transform-origin:left;}
 
     /* ===== Main content ===== */
     main{padding:48px 0 80px}
     section{scroll-margin-top: calc(var(--nav-h) + 16px);}
     .hero{display:grid; grid-template-columns: 1.1fr .9fr; gap:2rem; align-items:center; padding:48px 0}
-    .hero .card{background:var(--card); border:1px solid #ffffff1f; border-radius:var(--radius); padding:28px; box-shadow:0 16px 60px #0005; font-family:var(--body-font)}
-    .hero h1{font-size: clamp(28px, 2.8vw + 12px, 64px); line-height:1.06; margin:0 0 8px; font-weight:800}
-    .hero p{color:var(--muted); margin:0; font-family:var(--body-font)}
+    .hero .card{background:var(--card); border:1px solid var(--paper-line); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow-soft); font-family:var(--body-font)}
+    .hero h1{font-size: clamp(28px, 2.8vw + 12px, 60px); line-height:1.06; margin:0 0 8px}
+    .hero p{color:var(--ink-muted); margin:0; font-family:var(--body-font)}
+    .kicker{
+      font-family:var(--label-font); font-size:.72rem; font-weight:700; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--brass-deep); margin:0 0 10px;
+    }
+    .hero h2{font-size:1.3rem; margin:0 0 6px}
+    .hero ul{margin:12px 0 0; padding-left:20px; color:var(--ink-muted)}
+    .hero ul li{margin-bottom:4px}
 
     /* ====== MEDIA GRID ====== */
     .media-grid{
@@ -89,19 +103,19 @@
     }
     .media-card{
       background:var(--card);
-      border:1px solid #ffffff1f;
+      border:1px solid var(--paper-line);
       border-radius:var(--radius);
       overflow:hidden;
-      box-shadow:0 10px 40px rgba(0,0,0,.25);
+      box-shadow:var(--shadow-soft);
       transition:transform .15s ease, box-shadow .15s ease;
     }
-    .media-card:hover{ transform:translateY(-2px); box-shadow:0 14px 50px rgba(0,0,0,.35); }
+    .media-card:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
     .media-frame{
       position:relative;
       width:100%;
       aspect-ratio: var(--tile-ratio); /* consistent tile shape */
       overflow:hidden;
-      background:#0c0f18;
+      background:var(--paper-deep);
     }
     .media-frame img,
     .media-frame video{
@@ -111,13 +125,14 @@
       display:block;
     }
     .media-caption{
-      padding:12px 14px; color:var(--muted); font-size:.95rem;
-      border-top:1px solid #ffffff12;
+      padding:11px 14px; color:var(--ink-muted); font-family:var(--label-font); font-size:.72rem;
+      letter-spacing:.04em; text-transform:uppercase;
+      border-top:1px solid var(--paper-line);
     }
 
     /* ===== Interior Photography sub-section ===== */
-    .gallery-subheading{margin-top:56px; margin-bottom:6px}
-    .gallery-subtext{color:var(--muted); margin:0 0 18px; max-width:70ch}
+    .gallery-subheading{margin-top:56px; margin-bottom:6px; font-size:1.4rem}
+    .gallery-subtext{color:var(--ink-muted); margin:0 0 18px; max-width:70ch}
 
     /* ===== Resume sections ===== */
     .section-heading{margin:0 0 16px}
@@ -129,36 +144,41 @@
     }
     .resume-card{
       background:var(--card);
-      border:1px solid #ffffff1f;
+      border:1px solid var(--paper-line);
       border-radius:var(--radius);
       padding:22px;
-      box-shadow:0 10px 40px rgba(0,0,0,.22);
+      box-shadow:var(--shadow-soft);
     }
     .resume-card h3{margin:0 0 4px; font-size:1.08rem}
-    .resume-card .meta{margin:0 0 10px; color:var(--muted); font-size:.92rem}
-    .resume-card p{margin:0; color:var(--muted)}
-    .resume-card ul{margin:10px 0 0; padding-left:20px; color:var(--muted)}
+    .resume-card .meta{margin:0 0 10px; color:var(--brass-deep); font-size:.72rem; font-family:var(--label-font); letter-spacing:.05em; text-transform:uppercase}
+    .resume-card p{margin:0; color:var(--ink-muted)}
+    .resume-card ul{margin:10px 0 0; padding-left:20px; color:var(--ink-muted)}
     .skill-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
     .skill{
-      padding:7px 11px;
+      padding:7px 12px;
       border-radius:999px;
-      background:#ffffff10;
-      border:1px solid #ffffff1c;
-      color:var(--muted);
-      font-size:.9rem;
+      background:rgba(169,130,78,.12);
+      border:1px solid rgba(169,130,78,.3);
+      color:var(--brass-deep);
+      font-family:var(--label-font);
+      font-size:.75rem;
+      letter-spacing:.03em;
     }
 
     @media (max-width:1000px){ .hero{grid-template-columns:1fr} .media-grid{grid-template-columns:1fr 1fr} .resume-grid{grid-template-columns:1fr} }
     @media (max-width:640px){ .media-grid{grid-template-columns:1fr} }
 
-    footer{padding:56px 0 80px; color:var(--muted); font-family:var(--body-font)}
+    footer{padding:56px 0 80px; color:var(--ink-muted); font-family:var(--label-font); font-size:.78rem; border-top:1px solid var(--paper-line); margin-top:24px}
     footer a{color:inherit}
+
+    /* Visible keyboard focus throughout */
+    a:focus-visible, button:focus-visible{ outline:2px solid var(--brass-deep); outline-offset:3px; }
 
     /* Keep content above the canvas */
     header, main, footer { position: relative; z-index: 1; }
 
     /* ===== Animated p5.js background canvas ===== */
-    #bg-canvas{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.6;}
+    #bg-canvas{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.55;}
   </style>
 </head>
 <body>
@@ -170,10 +190,10 @@
   <header>
     <div class="wrap nav" role="navigation" aria-label="Primary">
       <div class="brand">
-        <!-- Abstract light-grey blob with initials -->
+        <!-- Abstract brass blob with initials -->
         <svg class="blob" width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
-          <path fill="#bdbdbd" d="M79.6,59.2c-6.7,16-24.7,23.1-39,17.2c-11.5-4.7-20-16.2-19.1-28.5c1-13.5,11.4-25.8,25.2-28.2 c14.5-2.6,30.1,6.2,34.1,20.2C82,46.2,82.1,53,79.6,59.2z"/>
-          <text x="50" y="58" text-anchor="middle" font-size="30" font-family="Poppins, sans-serif" fill="#ffffff" font-weight="700">AT</text>
+          <path fill="#a9824e" d="M79.6,59.2c-6.7,16-24.7,23.1-39,17.2c-11.5-4.7-20-16.2-19.1-28.5c1-13.5,11.4-25.8,25.2-28.2 c14.5-2.6,30.1,6.2,34.1,20.2C82,46.2,82.1,53,79.6,59.2z"/>
+          <text x="50" y="58" text-anchor="middle" font-size="30" font-family="Fraunces, serif" fill="#f5efe3" font-weight="700">AT</text>
         </svg>
         <span>Ava Tartakovsky</span>
       </div>
@@ -193,7 +213,7 @@
     <section id="about" aria-labelledby="about-h">
       <div class="hero">
         <div>
-          <p class="kicker">PORTFOLIO</p>
+          <p class="kicker">Portfolio</p>
           <h1 id="about-h">Ava Tartakovsky</h1>
           <p class="muted">I am a Los Angeles-based creative and recent UC Santa Barbara graduate with experience in interior design, photography, luxury hospitality, event production, and visual content. I enjoy combining strong organization with a thoughtful visual perspective to support polished, detail-driven projects.</p>
         </div>
@@ -458,20 +478,20 @@
     <small>© <span id="year"></span> Ava Tartakovsky. Built with vanilla HTML/CSS/JS. Hosted on GitHub Pages.</small>
   </footer>
 
-  <!-- p5.js background (optional – same as before, keep if you like) -->
+  <!-- p5.js background (recolored to warm brass/clay tones to match the new palette) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    // soft light background blobs
+    // soft warm background blobs
     let s = (p) => {
       let blobs = [], NUM = 6;
       class B { constructor(){ this.r=p.random(100,160); this.x=p.random(p.width); this.y=p.random(p.height); this.a=p.random(1000) }
         u(){ this.x+=p.noise(this.a)-.5; this.y+=p.noise(this.a+99)-.5; this.a+=.005;
           if(this.x<-200)this.x=p.width+200; if(this.x>p.width+200)this.x=-200;
           if(this.y<-200)this.y=p.height+200; if(this.y>p.height+200)this.y=-200; }
-        d(){ p.noStroke(); p.fill(255,255,255,28); p.ellipse(this.x,this.y,this.r*1.15); p.fill(210,210,210,36); p.ellipse(this.x+8,this.y+6,this.r); } }
+        d(){ p.noStroke(); p.fill(169,130,78,26); p.ellipse(this.x,this.y,this.r*1.15); p.fill(156,91,66,30); p.ellipse(this.x+8,this.y+6,this.r); } }
       p.setup=()=>{ let c=p.createCanvas(p.windowWidth,p.windowHeight); c.id('bg-canvas'); c.parent('bg'); for(let i=0;i<NUM;i++)blobs.push(new B()); };
       p.windowResized=()=>p.resizeCanvas(p.windowWidth,p.windowHeight);
-      p.draw=()=>{ p.clear(); p.blendMode(p.SOFT_LIGHT); blobs.forEach(b=>{b.u(); b.d();}); p.blendMode(p.BLEND); };
+      p.draw=()=>{ p.clear(); p.blendMode(p.MULTIPLY); blobs.forEach(b=>{b.u(); b.d();}); p.blendMode(p.BLEND); };
     }; new p5(s);
   </script>
 
