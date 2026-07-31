@@ -1,16 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ava Tartakovsky — Portfolio</title>
-  <meta name="description" content="Portfolio of Ava Tartakovsky, a Los Angeles-based creative with experience in interior design, photography, luxury hospitality, event production, and visual content."/>
-
-  <!-- ====== Fonts: Fraunces (display serif), Inter (body + labels) ====== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Ava Tartakovsky — Portfolio</title>
+<meta content="Portfolio of Ava Tartakovsky, a Los Angeles-based creative with experience in interior design, photography, luxury hospitality, event production, and visual content." name="description"/>
+<!-- ====== Fonts: Fraunces (display serif), Inter (body + labels) ====== -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
     /* ====== Theme: plaster, ink, brass — quiet materials, not screen-materials ====== */
     :root{
       --paper: #f6f1e7;
@@ -51,14 +50,32 @@
     .brand{font-family:var(--heading-font); font-size:1.15rem; letter-spacing:.01em}
     .brand em{color:var(--ink)}
 
-    .nav ul{list-style:none; display:flex; gap:2.1rem; margin:0; padding:0}
+    .nav ul{list-style:none; display:flex; gap:.55rem; margin:0; padding:0}
     .nav a{
-      text-decoration:none; color:var(--ink-muted); font-size:.82rem;
-      letter-spacing:.06em; text-transform:uppercase; padding:.3rem 0;
-      border-bottom:1px solid transparent;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:var(--ink-muted);
+      font-size:.82rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      padding:.48rem .9rem;
+      border:1px solid transparent;
+      border-radius:999px;
+      transition:color .25s ease, background-color .25s ease, border-color .25s ease, transform .25s ease;
     }
-    .nav a:hover{color:var(--ink)}
-    .nav a[aria-current="true"], .nav a.is-active{color:var(--ink); border-bottom-color:var(--brass)}
+    .nav a:hover{
+      color:var(--ink);
+      background:rgba(171,133,82,.10);
+      border-color:rgba(171,133,82,.35);
+      transform:translateY(-1px);
+    }
+    .nav a[aria-current="true"], .nav a.is-active{
+      color:var(--ink);
+      background:rgba(171,133,82,.14);
+      border-color:var(--brass);
+    }
 
     .nav-toggle{display:none; background:none; border:1px solid var(--line); color:var(--ink); padding:.45rem .65rem; border-radius:4px}
     .nav-toggle:focus-visible{outline:2px solid var(--brass-deep)}
@@ -77,8 +94,7 @@
         z-index:9999;
       }
       .nav ul[aria-expanded="true"]{display:flex}
-      .nav a{padding:.75rem .5rem; border-bottom:1px solid var(--line-soft)}
-      .nav li:last-child a{border-bottom:none}
+      .nav a{width:100%; justify-content:flex-start; padding:.75rem .8rem; border-radius:8px}
       .nav-toggle{display:inline-flex; position:relative; z-index:10000}
     }
 
@@ -153,8 +169,13 @@
     .skill::before{content:"—"; position:absolute; left:0; color:var(--brass)}
 
     /* ===== Media grid ===== */
-    .gallery-lede{color:var(--ink-muted); margin:-8px 0 28px; max-width:62ch}
+    .gallery-lede{color:var(--ink-muted); margin:-8px 0 28px; max-width:68ch}
+    .gallery-note{font-size:.88rem; color:var(--ink-muted); margin:-14px 0 34px; max-width:72ch}
     .media-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:34px 26px; }
+    .selected-grid .media-card:first-child{grid-column:span 2}
+    .selected-grid .media-card:first-child .media-frame{aspect-ratio:16 / 10}
+    .creative-grid .media-card:nth-child(2){grid-column:span 2}
+    .creative-grid .media-card:nth-child(2) .media-frame{aspect-ratio:16 / 10}
     .media-card{ background:none; }
     .media-frame{
       position:relative; width:100%; aspect-ratio:var(--tile-ratio);
@@ -164,19 +185,72 @@
     .media-card figcaption{
       padding-top:10px; color:var(--ink-muted); font-size:.78rem; letter-spacing:.03em;
     }
-    .gallery-subheading{margin-top:12px; margin-bottom:6px; font-size:1.5rem}
+    .gallery-subheading{margin-top:54px; margin-bottom:18px; font-size:1.5rem}
+
+    /* ===== Subtle section reveals ===== */
+    .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease}
+    .reveal.is-visible{opacity:1; transform:none}
 
     @media (max-width:1000px){
       .hero{grid-template-columns:1fr; gap:32px}
       .media-grid{grid-template-columns:1fr 1fr}
+      .selected-grid .media-card:first-child,
+      .creative-grid .media-card:nth-child(2){grid-column:1 / -1}
       .resume-grid{grid-template-columns:1fr}
     }
-    @media (max-width:640px){ .media-grid{grid-template-columns:1fr} }
+    @media (max-width:640px){
+      .media-grid{grid-template-columns:1fr}
+      .selected-grid .media-card:first-child,
+      .creative-grid .media-card:nth-child(2){grid-column:auto}
+      .selected-grid .media-card:first-child .media-frame,
+      .creative-grid .media-card:nth-child(2) .media-frame{aspect-ratio:var(--tile-ratio)}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1; transform:none; transition:none}
+    }
 
     /* ===== Contact ===== */
-    .contact-line{ font-size:1.1rem; }
-    .contact-line a{ color:var(--ink); text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:4px }
-    .contact-line a:hover{ text-decoration-color:var(--brass) }
+    .contact-card{
+      padding:8px 0 18px;
+      max-width:760px;
+    }
+    .contact-kicker{
+      margin:0 0 10px;
+      font-size:.76rem;
+      font-weight:500;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--brass-deep);
+    }
+    .contact-email{
+      display:inline-block;
+      font-family:var(--heading-font);
+      font-size:clamp(30px, 4vw, 58px);
+      line-height:1.05;
+      color:var(--ink);
+      text-decoration:none;
+      letter-spacing:-.02em;
+      transition:color .25s ease, transform .25s ease;
+    }
+    .contact-email:hover{
+      color:var(--clay);
+      transform:translateX(4px);
+    }
+    .contact-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 18px;
+      margin:22px 0 0;
+      color:var(--ink-muted);
+      font-size:.92rem;
+      letter-spacing:.02em;
+    }
+    .contact-meta a{
+      color:inherit;
+      text-decoration:none;
+      border-bottom:1px solid var(--line);
+    }
+    .contact-meta a:hover{border-bottom-color:var(--brass)}
 
     footer{padding:60px 0 70px; margin-top:36px; border-top:1px solid var(--line); color:var(--ink-muted); font-size:.82rem}
     footer a{color:inherit}
@@ -184,33 +258,36 @@
     a:focus-visible, button:focus-visible{ outline:2px solid var(--brass-deep); outline-offset:3px; }
 
 
-    /* ===== Custom pencil cursor ===== */
-    @media (pointer: fine){
-      body, a, button, .media-frame img { cursor:none; }
-      .pencil-cursor{
-        position:fixed;
-        left:0;
-        top:0;
-        z-index:20000;
-        pointer-events:none;
-        font-size:24px;
-        line-height:1;
-        transform:translate(-4px,-22px) rotate(-18deg);
-        filter:drop-shadow(0 2px 3px rgba(35,32,27,.18));
-        transition:font-size .16s ease, transform .16s ease, opacity .2s ease;
-      }
-      .pencil-cursor.is-hovering{
-        font-size:30px;
-        transform:translate(-5px,-27px) rotate(-8deg);
-      }
+    /* ===== Professional gallery interactions ===== */
+    .media-card{ transition:transform .28s ease; }
+    .media-frame{ cursor:zoom-in; }
+    .media-frame::after{
+      content:"View";
+      position:absolute;
+      inset:auto 14px 14px auto;
+      padding:.42rem .65rem;
+      border:1px solid rgba(246,241,231,.7);
+      background:rgba(35,32,27,.66);
+      color:#fff;
+      font-size:.68rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      opacity:0;
+      transform:translateY(5px);
+      transition:opacity .25s ease, transform .25s ease;
+      pointer-events:none;
+    }
+    .media-frame img{
+      cursor:zoom-in;
+      transition:transform .45s ease, filter .3s ease;
+    }
+    @media (hover:hover){
+      .media-card:hover{ transform:translateY(-3px); }
+      .media-frame:hover img{ transform:scale(1.025); filter:saturate(1); }
+      .media-frame:hover::after{ opacity:1; transform:translateY(0); }
     }
 
     /* ===== Full-image lightbox ===== */
-    .media-frame img{
-      cursor:zoom-in;
-      transition:transform .25s ease, filter .25s ease;
-    }
-    .media-frame:hover img{ transform:scale(1.025); filter:saturate(1); }
     .lightbox{
       position:fixed;
       inset:0;
@@ -218,317 +295,323 @@
       display:none;
       align-items:center;
       justify-content:center;
-      padding:28px;
-      background:rgba(24,22,19,.92);
-      backdrop-filter:blur(6px);
+      padding:34px 78px 54px;
+      background:rgba(24,22,19,.94);
+      backdrop-filter:blur(8px);
     }
     .lightbox.is-open{ display:flex; }
     .lightbox img{
       display:block;
-      max-width:min(94vw, 1500px);
-      max-height:88vh;
+      max-width:min(92vw, 1500px);
+      max-height:84vh;
       width:auto;
       height:auto;
       object-fit:contain;
       box-shadow:0 24px 80px rgba(0,0,0,.38);
     }
+    .lightbox-close,
+    .lightbox-nav{
+      border:1px solid rgba(255,255,255,.28);
+      background:rgba(246,241,231,.08);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:background .2s ease, border-color .2s ease;
+    }
+    .lightbox-close:hover,
+    .lightbox-nav:hover{ background:rgba(246,241,231,.16); border-color:rgba(255,255,255,.5); }
     .lightbox-close{
       position:fixed;
       top:18px;
       right:22px;
       width:46px;
       height:46px;
-      border:1px solid rgba(255,255,255,.28);
       border-radius:50%;
-      background:rgba(246,241,231,.1);
-      color:#fff;
       font-size:28px;
       line-height:1;
-      display:grid;
-      place-items:center;
-      cursor:pointer;
     }
+    .lightbox-nav{
+      position:fixed;
+      top:50%;
+      width:48px;
+      height:64px;
+      transform:translateY(-50%);
+      font-size:30px;
+      line-height:1;
+    }
+    .lightbox-prev{ left:18px; }
+    .lightbox-next{ right:18px; }
     .lightbox-caption{
       position:fixed;
-      left:24px;
-      right:24px;
-      bottom:14px;
+      left:76px;
+      right:76px;
+      bottom:16px;
       color:rgba(255,255,255,.82);
       text-align:center;
       font-size:.78rem;
       letter-spacing:.05em;
     }
     body.lightbox-open{ overflow:hidden; }
+
+    @media (max-width:640px){
+      .lightbox{ padding:70px 14px 58px; }
+      .lightbox-nav{ width:42px; height:52px; background:rgba(24,22,19,.5); }
+      .lightbox-prev{ left:8px; }
+      .lightbox-next{ right:8px; }
+      .lightbox-caption{ left:18px; right:18px; }
+      .media-frame::after{ opacity:1; transform:none; }
+    }
   </style>
 </head>
 <body>
-  <!-- Continuous line-drawing background, evoking an architect's sketchbook -->
-  <div id="bg-sketch" aria-hidden="true">
-    <svg viewBox="0 0 400 400" width="440" height="440" style="top:6%; left:-4%;">
-      <!-- armchair, single line -->
-      <path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:0s"
-        d="M70,260 v-70 q0,-20 20,-20 h100 q20,0 20,20 v70 M70,260 h140 M70,260 v30 q0,10 10,10 M210,260 v30 q0,10 -10,10 M60,190 v50 M230,190 v50" />
-    </svg>
-    <svg viewBox="0 0 300 400" width="320" height="420" style="top:36%; right:2%;">
-      <!-- arched doorway -->
-      <path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:4.5s"
-        d="M70,380 V150 q0,-90 80,-90 q80,0 80,90 V380" />
-    </svg>
-    <svg viewBox="0 0 260 300" width="230" height="270" style="bottom:8%; left:8%;">
-      <!-- table lamp -->
-      <path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:9s"
-        d="M60,40 L200,40 L160,140 L100,140 Z M130,140 V220 M80,260 h100 M80,260 q-10,0 -10,-15 h120 q0,15 -10,15" />
-    </svg>
-    <svg viewBox="0 0 260 340" width="210" height="270" style="top:8%; right:22%;">
-      <!-- potted plant -->
-      <path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:13.5s"
-        d="M130,150 C90,130 80,70 100,20 C120,70 130,110 130,150 C170,120 190,60 175,15 C150,60 132,100 130,150 M130,150 V250 M90,250 h80 l-8,60 h-64 Z" />
-    </svg>
-    <svg viewBox="0 0 380 260" width="360" height="250" style="bottom:4%; right:-2%;">
-      <!-- window with light -->
-      <path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:18s"
-        d="M40,20 h300 v200 h-300 Z M190,20 v200 M40,120 h300" />
-    </svg>
-  </div>
+<!-- Continuous line-drawing background, evoking an architect's sketchbook -->
+<div aria-hidden="true" id="bg-sketch">
+<svg height="440" style="top:6%; left:-4%;" viewbox="0 0 400 400" width="440">
+<!-- armchair, single line -->
+<path d="M70,260 v-70 q0,-20 20,-20 h100 q20,0 20,20 v70 M70,260 h140 M70,260 v30 q0,10 10,10 M210,260 v30 q0,10 -10,10 M60,190 v50 M230,190 v50" pathlength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:0s"></path>
+</svg>
+<svg height="420" style="top:36%; right:2%;" viewbox="0 0 300 400" width="320">
+<!-- arched doorway -->
+<path d="M70,380 V150 q0,-90 80,-90 q80,0 80,90 V380" pathlength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:4.5s"></path>
+</svg>
+<svg height="270" style="bottom:8%; left:8%;" viewbox="0 0 260 300" width="230">
+<!-- table lamp -->
+<path d="M60,40 L200,40 L160,140 L100,140 Z M130,140 V220 M80,260 h100 M80,260 q-10,0 -10,-15 h120 q0,15 -10,15" pathlength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:9s"></path>
+</svg>
+<svg height="270" style="top:8%; right:22%;" viewbox="0 0 260 340" width="210">
+<!-- potted plant -->
+<path d="M130,150 C90,130 80,70 100,20 C120,70 130,110 130,150 C170,120 190,60 175,15 C150,60 132,100 130,150 M130,150 V250 M90,250 h80 l-8,60 h-64 Z" pathlength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:13.5s"></path>
+</svg>
+<svg height="250" style="bottom:4%; right:-2%;" viewbox="0 0 380 260" width="360">
+<!-- window with light -->
+<path d="M40,20 h300 v200 h-300 Z M190,20 v200 M40,120 h300" pathlength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation-delay:18s"></path>
+</svg>
+</div>
+<a class="skip-link" href="#content">Skip to content</a>
+<header>
+<div aria-label="Primary" class="wrap nav" role="navigation">
+<div class="brand"><em>A</em>va Tartakovsky</div>
+<button aria-controls="menu" aria-expanded="false" aria-label="Toggle menu" class="nav-toggle">☰</button>
+<ul aria-expanded="false" id="menu" role="menubar">
 
-  <a class="skip-link" href="#content">Skip to content</a>
 
-  <header>
-    <div class="wrap nav" role="navigation" aria-label="Primary">
-      <div class="brand"><em>A</em>va Tartakovsky</div>
-      <button class="nav-toggle" aria-controls="menu" aria-expanded="false" aria-label="Toggle menu">☰</button>
-      <ul id="menu" role="menubar" aria-expanded="false">
-        <li role="none"><a role="menuitem" href="#about" data-spy>About</a></li>
-        <li role="none"><a role="menuitem" href="#experience" data-spy>Experience</a></li>
-        <li role="none"><a role="menuitem" href="#gallery" data-spy>Gallery</a></li>
-        <li role="none"><a role="menuitem" href="#contact" data-spy>Contact</a></li>
-      </ul>
-    </div>
-    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
-  </header>
 
-  <main id="content" class="wrap">
-    <!-- HERO / INTRO -->
-    <section id="about" aria-labelledby="about-h">
-      <div class="hero">
-        <div>
-          <p class="kicker">Portfolio — Los Angeles</p>
-          <h1 id="about-h">Ava<br /><em>Tartakovsky</em></h1>
-          <p class="lede">I am a Los Angeles-based creative and recent UC Santa Barbara graduate with experience in interior design, photography, luxury hospitality, event production, and visual content. I enjoy combining strong organization with a thoughtful visual perspective to support polished, detail-driven projects.</p>
-        </div>
-        <dl class="facts">
-          <dt>Education</dt>
-          <dd>Sociology B.A., Media Arts &amp; Design Minor, Technology Management Certificate</dd>
-          <dt>Focus</dt>
-          <dd>Interior Design, Photography, Graphic Design &amp; Creative Production</dd>
-          <dt>Open to</dt>
-          <dd>Interior design and creative assistant opportunities</dd>
-        </dl>
-      </div>
-    </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" aria-labelledby="experience-h">
-      <div class="section-heading">
-        <span class="index">01</span>
-        <h2 id="experience-h">Experience</h2>
-      </div>
-      <div class="resume-grid">
-        <article class="resume-card">
-          <h3>Interior Design Assistant &amp; Photographer</h3>
-          <p class="meta">Janette Mallory Interiors · Montecito, CA · June–September 2025</p>
-          <p>Supported residential design projects through material and sample sourcing, finish and furnishing research, on-site photography, and the organization and editing of visual assets.</p>
-        </article>
-
-        <article class="resume-card">
-          <h3>Host</h3>
-          <p class="meta">Caruso’s at Rosewood Miramar · Montecito, CA · March–June 2026</p>
-          <p>Delivered polished service in a luxury hospitality environment by managing reservations, tracking VIP preferences, coordinating dining room flow, and communicating guest needs.</p>
-        </article>
-
-        <article class="resume-card">
-          <h3>Event Production Intern</h3>
-          <p class="meta">Levine Fox Events / Alyson Fox · Studio City, CA · 2022–Present</p>
-          <p>Assist with client events by building presentation decks, coordinating vendors, tracking expenses, handling administrative tasks, and creating social media content.</p>
-        </article>
-
-        <article class="resume-card">
-          <h3>Social Media Manager</h3>
-          <p class="meta">Genndy Tartakovsky · Los Angeles, CA · 2019–Present</p>
-          <p>Create and organize content plans, maintain a consistent visual presence, support audience growth, and communicate with potential business partners.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- EDUCATION & SKILLS -->
-    <section id="education" aria-labelledby="education-h">
-      <div class="section-heading">
-        <span class="index">02</span>
-        <h2 id="education-h">Education &amp; Skills</h2>
-      </div>
-      <div class="resume-grid">
-        <article class="resume-card">
-          <h3>University of California, Santa Barbara</h3>
-          <p class="meta">Graduated March 2026 · GPA 3.5</p>
-          <p>Sociology major, Media Arts &amp; Design minor, and Technology Management Certificate. Semester abroad at the University of Barcelona in Fall 2024.</p>
-        </article>
-
-        <article class="resume-card">
-          <h3>Technical &amp; Creative Skills</h3>
-          <div class="skill-list" aria-label="Skills">
-            <span class="skill">Adobe Photoshop</span>
-            <span class="skill">Google Workspace</span>
-            <span class="skill">Microsoft Office</span>
-            <span class="skill">Excel</span>
-            <span class="skill">Procreate</span>
-            <span class="skill">Blender</span>
-            <span class="skill">SketchUp</span>
-            <span class="skill">AutoCAD</span>
-            <span class="skill">Photography</span>
-            <span class="skill">Graphic Design</span>
-            <span class="skill">Calligraphy</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section id="gallery" aria-labelledby="gallery-h">
-      <div class="section-heading">
-        <span class="index">03</span>
-        <h2 id="gallery-h">Gallery</h2>
-      </div>
-
-      <p class="gallery-lede">
-        Photography captured while working as an Interior Design Assistant at Janette Mallory Interiors. I was responsible for documenting the completed spaces through photography; I was not the interior designer for these projects.
+<li role="none"><a data-spy="" href="#about" role="menuitem">About</a></li><li role="none"><a data-spy="" href="#work" role="menuitem">Work</a></li><li role="none"><a data-spy="" href="#experience" role="menuitem">Experience</a></li><li role="none"><a data-spy="" href="#contact" role="menuitem">Contact</a></li></ul>
+</div>
+<div aria-hidden="true" class="progress"><i id="bar"></i></div>
+</header>
+<main class="wrap" id="content">
+<!-- HERO / INTRO -->
+<section aria-labelledby="about-h" id="about">
+<div class="hero">
+<div>
+<p class="kicker">Portfolio — Los Angeles</p>
+<h1 id="about-h">Ava<br/><em>Tartakovsky</em></h1>
+<p class="lede">I am a Los Angeles-based creative and recent UC Santa Barbara graduate with experience in interior design, photography, luxury hospitality, event production, and visual content. I bring together visual storytelling, thoughtful organization, and an appreciation for spaces that feel both refined and lived in.</p>
+</div>
+<dl class="facts">
+<dt>Education</dt>
+<dd>Sociology B.A., Media Arts &amp; Design Minor, Technology Management Certificate</dd>
+<dt>Focus</dt>
+<dd>Interior Design, Photography, Graphic Design &amp; Creative Production</dd>
+<dt>Open to</dt>
+<dd>Interior design and creative assistant opportunities</dd>
+</dl>
+</div>
+</section><section aria-labelledby="work-h" id="work">
+<div class="section-heading">
+<span class="index">01</span>
+<h2 id="work-h">Selected Work</h2>
+</div>
+<p class="gallery-lede">
+        A selection of interior, architectural, and creative photography focused on composition, materiality, atmosphere, and detail.
       </p>
+<p class="gallery-note">Interior photographs were captured while working as an Interior Design Assistant at Janette Mallory Interiors. I documented the completed spaces through photography and was not the interior designer for these projects.</p>
+<div class="media-grid selected-grid">
+<figure class="media-card">
+<div class="media-frame"><img alt="Interior Photography" loading="lazy" src="DSC_0803.JPG"/></div>
 
-      <div class="media-grid">
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0803.JPG" alt="Interior Photography" loading="lazy"></div>
-          <figcaption>Residential Interior Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0813.JPG" alt="Interior Photography" loading="lazy"></div>
-          <figcaption>Residential Interior Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0819.JPG" alt="Interior Photography" loading="lazy"></div>
-          <figcaption>Residential Interior Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0841.JPG" alt="Interior Photography" loading="lazy"></div>
-          <figcaption>Residential Interior Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0848.JPG" alt="Interior Photography" loading="lazy"></div>
-          <figcaption>Residential Interior Photography</figcaption>
-        </figure>
-      </div>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="Interior Photography" loading="lazy" src="DSC_0813.JPG"/></div>
 
-      <h3 class="gallery-subheading">Creative Photography</h3>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="Interior Photography" loading="lazy" src="DSC_0819.JPG"/></div>
 
-      <div class="media-grid">
-        <figure class="media-card">
-          <div class="media-frame"><video src="Cindy%204K0001-1525.MOV" playsinline controls preload="metadata"></video></div>
-          <figcaption>Creative Video Project</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="4C8B4DE8-2437-4AFC-9D1C-123467AD9366%202.JPG" alt="4C8B4DE8 image" loading="lazy"></div>
-          <figcaption>Interior &amp; Detail Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0592.JPG" alt="DSC_0592" loading="lazy"></div>
-          <figcaption>Photography Study</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0755.JPG" alt="DSC_0755" loading="lazy"></div>
-          <figcaption>Photography Study</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0849.JPG" alt="DSC_0849" loading="lazy"></div>
-          <figcaption>Photography Study</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0864.JPG" alt="DSC_0864" loading="lazy"></div>
-          <figcaption>Photography Study</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="DSC_0901.JPG" alt="DSC_0901" loading="lazy"></div>
-          <figcaption>Photography Study</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_6901.JPG" alt="IMG_6901" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_8095%203.JPG" alt="IMG_8095 3" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_8097%202.JPG" alt="IMG_8097 2" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0040.JPG" alt="IMG_0040" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0047.JPG" alt="IMG_0047" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0049.JPG" alt="IMG_0049" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0058.JPG" alt="IMG_0058" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0157.JPG" alt="IMG_0157" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0181.JPG" alt="IMG_0181" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0204.JPG" alt="IMG_0204" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-        <figure class="media-card">
-          <div class="media-frame"><img src="IMG_0237.JPG" alt="IMG_0237" loading="lazy"></div>
-          <figcaption>Creative Photography</figcaption>
-        </figure>
-      </div>
-    </section>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="Interior Photography" loading="lazy" src="DSC_0841.JPG"/></div>
 
-    <!-- CONTACT -->
-    <section id="contact" aria-labelledby="contact-h">
-      <div class="section-heading">
-        <span class="index">04</span>
-        <h2 id="contact-h">Contact</h2>
-      </div>
-      <p class="contact-line">Email <a href="mailto:avatartakovsky1@gmail.com">avatartakovsky1@gmail.com</a> · Los Angeles, California · <a href="tel:+18187984050">(818) 798-4050</a></p>
-    </section>
-  </main>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="Interior Photography" loading="lazy" src="DSC_0848.JPG"/></div>
 
+</figure>
+</div>
+<h3 class="gallery-subheading">Creative Photography</h3>
+<div class="media-grid creative-grid">
+<figure class="media-card">
+<div class="media-frame"><video controls="" playsinline="" preload="metadata" src="Cindy%204K0001-1525.MOV"></video></div>
 
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="4C8B4DE8 image" loading="lazy" src="4C8B4DE8-2437-4AFC-9D1C-123467AD9366%202.JPG"/></div>
 
-  <div class="pencil-cursor" aria-hidden="true">✎</div>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="DSC_0592" loading="lazy" src="DSC_0592.JPG"/></div>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Full-size image viewer" aria-hidden="true">
-    <button class="lightbox-close" type="button" aria-label="Close image viewer">×</button>
-    <img id="lightbox-image" src="" alt="">
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="DSC_0755" loading="lazy" src="DSC_0755.JPG"/></div>
 
-  <footer class="wrap">
-    <small>© <span id="year"></span> Ava Tartakovsky. Hosted on GitHub Pages.</small>
-  </footer>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="DSC_0849" loading="lazy" src="DSC_0849.JPG"/></div>
 
-  <script>
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="DSC_0864" loading="lazy" src="DSC_0864.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="DSC_0901" loading="lazy" src="DSC_0901.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_6901" loading="lazy" src="IMG_6901.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_8095 3" loading="lazy" src="IMG_8095%203.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_8097 2" loading="lazy" src="IMG_8097%202.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0040" loading="lazy" src="IMG_0040.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0047" loading="lazy" src="IMG_0047.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0049" loading="lazy" src="IMG_0049.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0058" loading="lazy" src="IMG_0058.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0157" loading="lazy" src="IMG_0157.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0181" loading="lazy" src="IMG_0181.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0204" loading="lazy" src="IMG_0204.JPG"/></div>
+
+</figure>
+<figure class="media-card">
+<div class="media-frame"><img alt="IMG_0237" loading="lazy" src="IMG_0237.JPG"/></div>
+
+</figure>
+</div>
+</section>
+<!-- EXPERIENCE -->
+<section aria-labelledby="experience-h" id="experience">
+<div class="section-heading">
+<span class="index">02</span>
+<h2 id="experience-h">Experience</h2>
+</div>
+<div class="resume-grid">
+<article class="resume-card">
+<h3>Interior Design Assistant &amp; Photographer</h3>
+<p class="meta">Janette Mallory Interiors · Montecito, CA · June–September 2025</p>
+<p>Supported residential design projects through material and sample sourcing, finish and furnishing research, on-site photography, and the organization and editing of visual assets.</p>
+</article>
+<article class="resume-card">
+<h3>Host</h3>
+<p class="meta">Caruso’s at Rosewood Miramar · Montecito, CA · March–June 2026</p>
+<p>Delivered polished service in a luxury hospitality environment by managing reservations, tracking VIP preferences, coordinating dining room flow, and communicating guest needs.</p>
+</article>
+<article class="resume-card">
+<h3>Event Production Intern</h3>
+<p class="meta">Levine Fox Events / Alyson Fox · Studio City, CA · 2022–Present</p>
+<p>Assist with client events by building presentation decks, coordinating vendors, tracking expenses, handling administrative tasks, and creating social media content.</p>
+</article>
+<article class="resume-card">
+<h3>Social Media Manager</h3>
+<p class="meta">Genndy Tartakovsky · Los Angeles, CA · 2019–Present</p>
+<p>Create and organize content plans, maintain a consistent visual presence, support audience growth, and communicate with potential business partners.</p>
+</article>
+</div>
+</section>
+<!-- EDUCATION & SKILLS -->
+<section aria-labelledby="education-h" id="education">
+<div class="section-heading">
+<span class="index">03</span>
+<h2 id="education-h">Education &amp; Skills</h2>
+</div>
+<div class="resume-grid">
+<article class="resume-card">
+<h3>University of California, Santa Barbara</h3>
+<p class="meta">Graduated March 2026 · GPA 3.5</p>
+<p>Sociology major, Media Arts &amp; Design minor, and Technology Management Certificate. Semester abroad at the University of Barcelona in Fall 2024.</p>
+</article>
+<article class="resume-card">
+<h3>Technical &amp; Creative Skills</h3>
+<div aria-label="Skills" class="skill-list">
+<span class="skill">Adobe Photoshop</span>
+<span class="skill">Google Workspace</span>
+<span class="skill">Microsoft Office</span>
+<span class="skill">Excel</span>
+<span class="skill">Procreate</span>
+<span class="skill">Blender</span>
+<span class="skill">SketchUp</span>
+<span class="skill">AutoCAD</span>
+<span class="skill">Photography</span>
+<span class="skill">Graphic Design</span>
+<span class="skill">Calligraphy</span>
+</div>
+</article>
+</div>
+</section>
+<!-- GALLERY -->
+
+<!-- CONTACT -->
+<section aria-labelledby="contact-h" id="contact">
+<div class="section-heading">
+<span class="index">04</span>
+<h2 id="contact-h">Contact</h2>
+</div>
+<div class="contact-card">
+<p class="contact-kicker">Let’s connect</p>
+<a class="contact-email" href="mailto:avatartakovsky1@gmail.com">avatartakovsky1@gmail.com</a>
+<p class="contact-meta"><span>Los Angeles, California</span><a href="tel:+18187984050">(818) 798-4050</a></p>
+</div>
+</section>
+</main>
+<div aria-hidden="true" aria-label="Full-size image viewer" aria-modal="true" class="lightbox" id="lightbox" role="dialog">
+<button aria-label="Close image viewer" class="lightbox-close" type="button">×</button>
+<button aria-label="Previous image" class="lightbox-nav lightbox-prev" type="button">‹</button>
+<img alt="" id="lightbox-image" src=""/>
+<button aria-label="Next image" class="lightbox-nav lightbox-next" type="button">›</button>
+<div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+<footer class="wrap">
+<small>© <span id="year"></span> Ava Tartakovsky. Hosted on GitHub Pages.</small>
+</footer>
+<script>
     // Mobile menu toggle
     const toggle = document.querySelector('.nav-toggle');
     const menu = document.getElementById('menu');
@@ -565,29 +648,33 @@
 
 
 
-    // Custom pencil cursor
-    const pencilCursor = document.querySelector('.pencil-cursor');
-    if (pencilCursor && window.matchMedia('(pointer: fine)').matches) {
-      document.addEventListener('mousemove', (event) => {
-        pencilCursor.style.left = event.clientX + 'px';
-        pencilCursor.style.top = event.clientY + 'px';
-      });
-
-      document.querySelectorAll('a, button, .media-frame img').forEach((item) => {
-        item.addEventListener('mouseenter', () => pencilCursor.classList.add('is-hovering'));
-        item.addEventListener('mouseleave', () => pencilCursor.classList.remove('is-hovering'));
-      });
-
-      document.addEventListener('mouseleave', () => pencilCursor.style.opacity = '0');
-      document.addEventListener('mouseenter', () => pencilCursor.style.opacity = '1');
-    }
-
     // Full-size gallery image lightbox
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
     const lightboxCaption = document.getElementById('lightbox-caption');
     const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
+    const galleryImages = Array.from(document.querySelectorAll('.media-frame img'));
+    let activeImageIndex = 0;
     let lastFocusedImage = null;
+
+    const showImage = (index) => {
+      activeImageIndex = (index + galleryImages.length) % galleryImages.length;
+      const image = galleryImages[activeImageIndex];
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = `${activeImageIndex + 1} of ${galleryImages.length}`;
+    };
+
+    const openLightbox = (image) => {
+      lastFocusedImage = image;
+      showImage(galleryImages.indexOf(image));
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      lightboxClose.focus();
+    };
 
     const closeLightbox = () => {
       lightbox.classList.remove('is-open');
@@ -597,39 +684,44 @@
       if (lastFocusedImage) lastFocusedImage.focus();
     };
 
-    document.querySelectorAll('.media-frame img').forEach((image) => {
+    galleryImages.forEach((image) => {
       image.setAttribute('tabindex', '0');
       image.setAttribute('role', 'button');
       image.setAttribute('aria-label', 'Open full-size image: ' + (image.alt || 'portfolio photograph'));
-
-      const openImage = () => {
-        lastFocusedImage = image;
-        lightboxImage.src = image.currentSrc || image.src;
-        lightboxImage.alt = image.alt;
-        const caption = image.closest('figure')?.querySelector('figcaption')?.textContent || image.alt;
-        lightboxCaption.textContent = caption;
-        lightbox.classList.add('is-open');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('lightbox-open');
-        lightboxClose.focus();
-      };
-
-      image.addEventListener('click', openImage);
+      image.addEventListener('click', () => openLightbox(image));
       image.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          openImage();
+          openLightbox(image);
         }
       });
     });
 
     lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', () => showImage(activeImageIndex - 1));
+    lightboxNext.addEventListener('click', () => showImage(activeImageIndex + 1));
     lightbox.addEventListener('click', (event) => {
       if (event.target === lightbox) closeLightbox();
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') closeLightbox();
+      if (event.key === 'ArrowLeft') showImage(activeImageIndex - 1);
+      if (event.key === 'ArrowRight') showImage(activeImageIndex + 1);
     });
+
+    // Subtle section reveal animation
+    const revealItems = document.querySelectorAll('main section, .resume-card, .media-card');
+    revealItems.forEach(item => item.classList.add('reveal'));
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.08, rootMargin:'0px 0px -45px 0px' });
+    revealItems.forEach(item => revealObserver.observe(item));
 
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
